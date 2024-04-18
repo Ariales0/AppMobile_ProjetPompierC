@@ -7,11 +7,6 @@ using ProjetPompier_Mobile.Utils;
 using ProjetPompier_WEB.Utils;
 using AlertDialog = Android.App.AlertDialog;
 using AppMobile_ProjetPompierC;
-using Newtonsoft.Json.Linq;
-using System.Net.Http.Json;
-using System.Text;
-using System.Text.Json;
-
 namespace ProjetPompier_Mobile.Vues
 {
     [Activity(Label = "@string/app_name", MainLauncher = true)]

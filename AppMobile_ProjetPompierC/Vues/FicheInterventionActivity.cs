@@ -6,10 +6,6 @@ using ProjetPompier_Mobile.DTO;
 using ProjetPompier_Mobile.Utils;
 using ProjetPompier_WEB.Utils;
 using AppMobile_ProjetPompierC;
-using System.Net.Http.Json;
-using System.Text;
-using System.Text.Json;
-using Newtonsoft.Json.Linq;
 
 namespace ProjetPompier_Mobile.Vues
 {

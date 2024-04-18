@@ -5,10 +5,6 @@ using Newtonsoft.Json;
 using ProjetPompier_Mobile.DTO;
 using ProjetPompier_Mobile.Utils;
 using ProjetPompier_WEB.Utils;
-using Newtonsoft.Json.Linq;
-using System.Net.Http.Json;
-using System.Text;
-using System.Text.Json;
 
 /// <summary>
 /// Namespace pour les classes de type Vue.
