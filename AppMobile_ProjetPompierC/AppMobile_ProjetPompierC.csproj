@@ -15,6 +15,7 @@
     <None Remove="Resources\layout\InterfaceCaserne_Activity.axml" />
     <None Remove="Resources\layout\InterfaceFicheIntervention_Activity.axml" />
     <None Remove="Resources\layout\InterfaceGradeActivity.axml" />
+    <None Remove="Resources\layout\InterfaceGradeDetailsActivity.axml" />
     <None Remove="Resources\layout\InterfacePompierActivity.axml" />
     <None Remove="Resources\layout\InterfacePompierDetailsActivity.axml" />
     <None Remove="Resources\layout\InterfacePompierModifierActivity.axml" />
