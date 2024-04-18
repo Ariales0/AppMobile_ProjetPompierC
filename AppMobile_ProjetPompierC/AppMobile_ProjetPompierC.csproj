@@ -27,6 +27,7 @@
     <None Remove="Resources\layout\ListeAdapteurPompierItem.xml" />
     <None Remove="Resources\menu\PompierActivityOptionsMenu.axml" />
     <None Remove="Resources\menu\PompierDetailsOptionsMenu.axml" />
+    <None Remove="Resources\menu\PompierModifierOptionsMenu.axml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
