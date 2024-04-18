@@ -1,10 +1,10 @@
-﻿using AppMobile_ProjetPompierC;
-using Newtonsoft.Json;
-using ProjetPompier_Mobile.DTO;
-using ProjetPompier_Mobile.Utils;
-using ProjetPompier_WEB.Utils;
-using Android.Content;
+﻿using Android.Content;
 using Android.Views;
+using Newtonsoft.Json;
+
+using AppMobile_ProjetPompierC;
+using AppMobile_ProjetPompierC.DTO;
+using AppMobile_ProjetPompierC.Utils;
 
 /// <summary>
 /// Namespace pour les classes de type Vue.

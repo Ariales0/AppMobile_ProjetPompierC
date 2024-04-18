@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 /// <summary>
 /// Namespace contenant les classes d'utilisation autres.
 /// </summary>
-namespace ProjetPompier_WEB.Utils
+namespace AppMobile_ProjetPompierC.Utils
 {
     /// <summary>
     /// Classe représentant l'outil de communication vers le service Web distant.

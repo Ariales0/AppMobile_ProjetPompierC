@@ -2,7 +2,7 @@
 /// <summary>
 /// Namespace pour les classe de type DTOs.
 /// </summary>
-namespace ProjetPompier_Mobile.DTO
+namespace AppMobile_ProjetPompierC.DTO
 {
     /// <summary>
     /// Classe représentant le DTO d'un pompier.

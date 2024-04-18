@@ -2,7 +2,7 @@
 /// <summary>
 /// 
 /// </summary>
-namespace ProjetPompier_Mobile.Utils
+namespace AppMobile_ProjetPompierC.Utils
 {
     /// <summary>
     /// 

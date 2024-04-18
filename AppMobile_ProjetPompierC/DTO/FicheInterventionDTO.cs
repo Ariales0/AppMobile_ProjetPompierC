@@ -1,4 +1,4 @@
-﻿namespace ProjetPompier_Mobile.DTO
+﻿namespace AppMobile_ProjetPompierC.DTO
 {
     public class FicheInterventionDTO
     {

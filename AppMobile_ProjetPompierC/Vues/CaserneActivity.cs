@@ -1,12 +1,13 @@
 ﻿using Android.Content;
 using Android.Views;
 using Newtonsoft.Json;
-using ProjetPompier_Mobile.Adapters;
-using ProjetPompier_Mobile.DTO;
-using ProjetPompier_Mobile.Utils;
-using ProjetPompier_WEB.Utils;
 using AlertDialog = Android.App.AlertDialog;
+
 using AppMobile_ProjetPompierC;
+using AppMobile_ProjetPompierC.Adapters;
+using AppMobile_ProjetPompierC.DTO;
+using AppMobile_ProjetPompierC.Utils;
+
 namespace ProjetPompier_Mobile.Vues
 {
     [Activity(Label = "@string/app_name", MainLauncher = true)]

@@ -1,11 +1,10 @@
 ﻿using Android.Views;
-using ProjetPompier_Mobile.DTO;
-using AppMobile_ProjetPompierC;
+using AppMobile_ProjetPompierC.DTO;
 
 /// <summary>
 /// Namespace pour les adapteurs.
 /// </summary>
-namespace ProjetPompier_Mobile.Adapters
+namespace AppMobile_ProjetPompierC.Adapters
 {
     /// <summary>
     /// Classe représentant un adapteur pour une liste de Pompier(s).
