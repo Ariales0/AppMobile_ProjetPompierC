@@ -27,15 +27,15 @@
 		android:layout_height="wrap_content"
 		android:id="@+id/tlAjoutGrade">
         <TableRow
-            android:id="@+id/trGradeAjout"
+            android:id="@+id/trDescriptionGradeAjout"
             android:layout_height="93.0dp"
             android:gravity="center_horizontal"
             android:layout_width="match_parent">
             <TextView
-                android:text="Grade :"
+                android:text="Description :"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_column="0"
-                android:id="@+id/lblGradeAjout"
+                android:id="@+id/lblDescriptionGradeAjout"
                 android:layout_marginRight="0.0dp"
                 android:layout_marginLeft="0.0dp"
                 android:layout_width="105.0dp"
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content" />
             <EditText
                 android:layout_column="1"
-                android:id="@+id/edtGradeAjout"
+                android:id="@+id/edtDescriptionGradeAjout"
                 android:layout_height="40.5dp"
                 android:layout_width="202.5dp"
                 android:layout_marginBottom="0.0dp"
