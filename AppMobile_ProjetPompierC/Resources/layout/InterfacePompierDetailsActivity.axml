@@ -13,7 +13,7 @@
         android:paddingTop="45dp"
         android:id="@+id/tlPompierDetails">
         <TableRow
-            android:id="@+id/trPompierDetails"
+            android:id="@+id/trMatriculePompierDetails"
             android:layout_height="93.0dp"
             android:gravity="center_horizontal"
             android:layout_width="match_parent">
