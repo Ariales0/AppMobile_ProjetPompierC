@@ -8,6 +8,7 @@
     <ApplicationId>com.companyname.AppMobile_ProjetPompierC</ApplicationId>
     <ApplicationVersion>1</ApplicationVersion>
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\layout\InterfaceCaserneDetails_Activity.axml" />
@@ -24,6 +25,7 @@
     <None Remove="Resources\layout\ListeAdapteurFicheInterventionItem.xml" />
     <None Remove="Resources\layout\ListeAdapteurGradeItem.xml" />
     <None Remove="Resources\layout\ListeAdapteurPompierItem.xml" />
+    <None Remove="Resources\menu\PompierActivityOptionsMenu.axml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
