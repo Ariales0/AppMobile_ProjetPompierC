@@ -25,6 +25,9 @@
     <None Remove="Resources\layout\ListeAdapteurFicheInterventionItem.xml" />
     <None Remove="Resources\layout\ListeAdapteurGradeItem.xml" />
     <None Remove="Resources\layout\ListeAdapteurPompierItem.xml" />
+    <None Remove="Resources\menu\GradeActivityOptionsMenu.axml" />
+    <None Remove="Resources\menu\GradeDetailsOptionsMenu.axml" />
+    <None Remove="Resources\menu\GradeModifierOptionsMenu.axml" />
     <None Remove="Resources\menu\PompierActivityOptionsMenu.axml" />
     <None Remove="Resources\menu\PompierDetailsOptionsMenu.axml" />
     <None Remove="Resources\menu\PompierModifierOptionsMenu.axml" />

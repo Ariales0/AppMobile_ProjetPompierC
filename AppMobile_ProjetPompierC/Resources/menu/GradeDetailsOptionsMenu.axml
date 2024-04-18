@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/ModidiferGradeDetails" android:title="Modifier"/>
+	<item android:id="@+id/SupprimerGradeDetails" android:title="Supprimer"/>
+	<item android:id="@+id/RetourGradeDetails" android:title="Retour"/>
+	<item android:id="@+id/QuitterGradeDetails" android:title="Quitter"/>
+</menu>
