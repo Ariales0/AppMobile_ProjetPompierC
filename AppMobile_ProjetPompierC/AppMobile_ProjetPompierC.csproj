@@ -16,6 +16,7 @@
     <None Remove="Resources\layout\InterfaceFicheIntervention_Activity.axml" />
     <None Remove="Resources\layout\InterfacePompierActivity.axml" />
     <None Remove="Resources\layout\InterfacePompierDetailsActivity.axml" />
+    <None Remove="Resources\layout\InterfacePompierModifierActivity.axml" />
     <None Remove="Resources\layout\ListeAdapteurCaserneItem.xml" />
     <None Remove="Resources\layout\ListeAdapteurFicheInterventionItem.xml" />
     <None Remove="Resources\layout\ListeAdapteurGradeItem.xml" />
