@@ -7,7 +7,7 @@ using AppMobile_ProjetPompierC.Adapters;
 using AppMobile_ProjetPompierC.DTO;
 using AppMobile_ProjetPompierC.Utils;
 
-namespace ProjetPompier_Mobile.Vues
+namespace AppMobile_ProjetPompierC.Vues
 {
     [Activity(Label = "@string/app_name")]
     public class FicheInterventionActivity : Activity

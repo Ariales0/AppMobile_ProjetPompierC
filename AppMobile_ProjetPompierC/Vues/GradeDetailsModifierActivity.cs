@@ -1,46 +1,49 @@
 using Android.Content;
 using Android.Views;
 using Newtonsoft.Json;
-using AlertDialog = Android.App.AlertDialog;
 
-using AppMobile_ProjetPompierC.Adapters;
 using AppMobile_ProjetPompierC.DTO;
 using AppMobile_ProjetPompierC.Utils;
+using ProjetPompier_Mobile.Vues;
 
 namespace AppMobile_ProjetPompierC.Vues;
 
-[Activity(Label = "GradeActivity")]
-public class GradeActivity : Activity
+[Activity(Label = "GradeDetailsModifierActivity")]
+public class GradeDetailsModifierActivity : Activity
 {
     #region Proprietes
 
     /// <summary>
-    /// Liste des grades.
+    /// Description de la caserne envoye par l'activite precedent.
     /// </summary>
-    private List<GradeDTO> listeGrade;
+    private string paramDesciptionGrade;
 
     /// <summary>
-    /// Adapter pour la liste des grade.
+    /// Attribut représentant le pompier en objet PompierDTO.
     /// </summary>
-    private ListeGradeAdapter adapteurListeGrade;
+    private PompierDTO lePompier;
 
     /// <summary>
-    /// Desciption du grade.
+    /// Desciption du grade afficher.
+    /// </summary>
+    private TextView lblDesciptionGrade;
+
+    /// <summary>
+    /// Desciption du grade pour modification.
     /// </summary>
     private EditText edtDesciptionGrade;
 
     /// <summary>
-    /// Bouton d'ajout d'un grade.
+    /// CheckBox qui rend accessible ou non la modification du grade.
     /// </summary>
-    private Button btnAjouterGrade;
+    private CheckBox checkBoxModification;
 
     /// <summary>
-    /// ListView pour afficher les grades.
+    /// Bouton d'ajout d'un grade.
     /// </summary>
-    private ListView listViewGrade;
+    private Button btnModifierGrade;
 
     #endregion Proprietes
-
     #region Methodes
 
     /// <summary>
@@ -50,22 +53,15 @@ public class GradeActivity : Activity
     protected override void OnCreate(Bundle savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
-        SetContentView(Resource.Layout.InterfaceGrade);
+        SetContentView(Resource.Layout.InterfaceGradeDetailsModifier);
 
-        edtDesciptionGrade = FindViewById<EditText>(Resource.Id.edtDescriptionGradeAjout);
+        lblDesciptionGrade = FindViewById<TextView>(Resource.Id.tvDescriptionGradeDetails);
+        edtDesciptionGrade = FindViewById<EditText>(Resource.Id.tvGradeDescriptionModifier);
 
-        listViewGrade = FindViewById<ListView>(Resource.Id.lvGrade);
-        listViewGrade.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
-        {
-            Intent activiteGradeDetailsModifier = new Intent(this, typeof(GradeDetailsModifierActivity));
-            //On initialise les paramètres avant de lancer la nouvelle activité.
-            activiteGradeDetailsModifier.PutExtra("paramDesciptionGrade", listeGrade[e.Position].Description);
-            //On démarre la nouvelle activité.
-            StartActivity(activiteGradeDetailsModifier);
-        };
+        paramDesciptionGrade = Intent.GetStringExtra("paramDesciptionGrade");
 
-        btnAjouterGrade = FindViewById<Button>(Resource.Id.btnAjouterGrade);
-        btnAjouterGrade.Click += async (sender, e) =>
+        btnModifierGrade = FindViewById<Button>(Resource.Id.btnModifierGrade);
+        btnModifierGrade.Click += async (sender, e) =>
         {
             if (edtDesciptionGrade.Text.Length > 0)
             {
@@ -74,10 +70,9 @@ public class GradeActivity : Activity
                     string desciptionGrade = edtDesciptionGrade.Text;
                     GradeDTO gradeDTO = new GradeDTO(desciptionGrade);
 
-                    await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Grade/AjouterGrade", gradeDTO);
-                    DialoguesUtils.AfficherToasts(this, "Le grade " + desciptionGrade + " est ajouté");
-
-                    await RafraichirInterfaceDonnees();
+                    await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Grade/ModifierGrade?descriptionAvantChangement=" + lblDesciptionGrade.Text + "&descriptionApresChangement=" + edtDesciptionGrade.Text, null);
+                    DialoguesUtils.AfficherToasts(this,"Le grade "+ desciptionGrade + " est modifié !!!");
+                    Finish();
                 }
                 catch (Exception ex)
                 {
@@ -91,6 +86,14 @@ public class GradeActivity : Activity
                 DialoguesUtils.AfficherMessageOK(this, "Erreur", "Veuillez remplir tous les champs...");
             }
         };
+
+        checkBoxModification = FindViewById<CheckBox>(Resource.Id.checkBoxGradeModifier);
+        checkBoxModification.CheckedChange += (sender, e) =>
+        {
+            bool isChecked = checkBoxModification.Checked;
+            btnModifierGrade.Enabled = isChecked;
+            edtDesciptionGrade.Enabled = isChecked;
+        };
     }
 
     /// <summary>
@@ -102,75 +105,78 @@ public class GradeActivity : Activity
         await RafraichirInterfaceDonnees();
     }
 
+
     /// <summary>
-    /// Méthode permettant de rafraichir la liste des grades...
+    /// Méthode permettant de rafraichir les informations de la Caserne...
     /// </summary>
     private async Task RafraichirInterfaceDonnees()
     {
         try
         {
-            string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Grade/ObtenirListeGrade");
-            listeGrade = JsonConvert.DeserializeObject<List<GradeDTO>>(jsonResponse);
-            adapteurListeGrade = new ListeGradeAdapter(this, listeGrade.ToArray());
-            listViewGrade.Adapter = adapteurListeGrade;
-            edtDesciptionGrade.Text = "";
+            //Obtenir grade de l'API n'est pas utile
+            lblDesciptionGrade.Text = paramDesciptionGrade;
+            edtDesciptionGrade.Text = paramDesciptionGrade;
+
+            btnModifierGrade.Enabled = false;
+            edtDesciptionGrade.Enabled = false;
+
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            DialoguesUtils.AfficherMessageOK(this, "Erreur", ex.Message);
+            Finish();
         }
     }
 
-    /// <summary>Méthode de service permettant d'initialiser le menu de l'activité.</summary>
+    #region Menu
+    /// <summary>Méthode de service permettant d'initialiser le menu de l'activité principale.</summary>
     /// <param name="menu">Le menu à construire.</param>
     /// <returns>Retourne True si l'optionMenu est bien créé.</returns>
     public override bool OnCreateOptionsMenu(IMenu menu)
     {
-        MenuInflater.Inflate(Resource.Menu.GradeActivityOptionsMenu, menu);
+        MenuInflater.Inflate(Resource.Menu.GradeDetailsModifierOptionsMenu, menu);
         return base.OnCreateOptionsMenu(menu);
     }
 
     /// <summary>Méthode de service permettant de capter l'évenement exécuté lors d'un choix dans le menu.</summary>
     /// <param name="item">L'item sélectionné.</param>
-    /// <returns>Retourne si une option à été sélectionné avec succès.</returns>
+    /// <returns>Retourne si un option à été sélectionné avec succès.</returns>
     public override bool OnOptionsItemSelected(IMenuItem item)
     {
         switch (item.ItemId)
         {
-            case Resource.Id.ViderGradeActivity:
-
+            case Resource.Id.SupprimerGradeDM:
                 try
                 {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.SetPositiveButton("Non", (send, args) => { });
                     builder.SetNegativeButton("Oui", async (send, args) =>
                     {
-                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Grade/ViderListeGrade", null);
-                        await RafraichirInterfaceDonnees();
+                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Grade/SupprimerGrade?description=" + paramDesciptionGrade, null);
+                        Finish();
                     });
                     AlertDialog dialog = builder.Create();
                     dialog.SetTitle("Suppression");
-                    dialog.SetMessage("Voulez-vous vraiment vider la liste des grades ?");
+                    dialog.SetMessage("Voulez-vous vraiment supprimer le grade " + paramDesciptionGrade + "?");
                     dialog.Window.SetGravity(GravityFlags.Bottom);
                     dialog.Show();
                 }
                 catch (Exception ex)
                 {
-
                     DialoguesUtils.AfficherMessageOK(this, "Erreur", ex.Message);
                 }
                 break;
 
-            case Resource.Id.RetourGradeActivity:
+            case Resource.Id.RetourGradeDM:
                 Finish();
                 break;
 
-            case Resource.Id.QuitterGradeActivity:
+            case Resource.Id.QuitterGradeDM:
                 FinishAffinity();
                 break;
         }
         return base.OnOptionsItemSelected(item);
     }
-
+    #endregion Menu
     #endregion Methodes
+
 }

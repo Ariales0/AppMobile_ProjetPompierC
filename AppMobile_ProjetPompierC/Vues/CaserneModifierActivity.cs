@@ -9,7 +9,7 @@ using AppMobile_ProjetPompierC.Utils;
 /// <summary>
 /// Namespace pour les classes de type Vue.
 /// </summary>
-namespace ProjetPompier_Mobile.Vues
+namespace AppMobile_ProjetPompierC.Vues
 {
     /// <summary>
     /// Classe de type Activité pour la modification d'un Cégep.

@@ -9,7 +9,7 @@ using AppMobile_ProjetPompierC.DTO;
 using AppMobile_ProjetPompierC.Utils;
 
 
-namespace ProjetPompier_Mobile.Vues
+namespace AppMobile_ProjetPompierC.Vues
 {
     [Activity(Label = "@string/app_name", MainLauncher = true)]
     public class CaserneActivity : Activity
@@ -172,6 +172,7 @@ namespace ProjetPompier_Mobile.Vues
                         builder.SetNegativeButton("Oui", async (send, args) =>
                         {
                             await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Caserne/ViderListeCaserne", null);
+                            DialoguesUtils.AfficherToasts(this, "Tous les grades sont supprimés");
                             await RafraichirInterfaceDonnees();
                         });
                         AlertDialog dialog = builder.Create();
@@ -186,6 +187,13 @@ namespace ProjetPompier_Mobile.Vues
                         DialoguesUtils.AfficherMessageOK(this, "Erreur", ex.Message);
                     }
                     break;
+
+                case Resource.Id.Grade:
+                    Intent activiteGrade = new Intent(this, typeof(GradeActivity));
+                    //On démarre la nouvelle activité.
+                    StartActivity(activiteGrade);
+                    break;
+
                 case Resource.Id.Quitter:
                     Finish();
                     break;
