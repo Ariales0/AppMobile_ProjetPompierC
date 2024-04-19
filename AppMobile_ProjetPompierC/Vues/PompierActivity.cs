@@ -191,23 +191,20 @@ public class PompierActivity : Activity
                 
                 try
                 {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.SetPositiveButton("Non", (send, args) => { });
-                    builder.SetNegativeButton("Oui", async (send, args) =>
+                    bool reponse = DialoguesUtils.AfficherDialogueQuestionOuiNon(this, "Vider la liste des pompiers!?", "Voulez-vous vraiment vider la liste des pompiers de la caserne " + paramNomCaserne + " ?");
+                    if (reponse) 
                     {
-                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ViderListePompier?nomCaserne="+paramNomCaserne, null);
-                        await RafraichirInterfaceDonnees();
-                    });
-                    AlertDialog dialog = builder.Create();
-                    dialog.SetTitle("Suppression");
-                    dialog.SetMessage("Voulez-vous vraiment vider la liste des pompiers de la caserne "+paramNomCaserne+" ?");
-                    dialog.Window.SetGravity(GravityFlags.Bottom);
-                    dialog.Show();
+                        async Task ViderListePompierAsync()
+                        {
+                            await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ViderListePompier?nomCaserne=" + paramNomCaserne, null);
+                            await RafraichirInterfaceDonnees();
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
 
-                    //DialoguesUtils.AfficherMessageOK(this, "Erreur", ex.Message);
+                    DialoguesUtils.AfficherMessageOK(this, "Erreur", ex.Message);
                 }
                 break;
 

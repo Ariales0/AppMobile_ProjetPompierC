@@ -147,18 +147,15 @@ public class GradeDetailsModifierActivity : Activity
             case Resource.Id.SupprimerGradeDM:
                 try
                 {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.SetPositiveButton("Non", (send, args) => { });
-                    builder.SetNegativeButton("Oui", async (send, args) =>
+                    bool reponse = DialoguesUtils.AfficherDialogueQuestionOuiNon(this, "Suppression !?", "Voulez-vous vraiment supprimer le grade " + paramDesciptionGrade + "?");
+                    if (reponse)
                     {
-                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Grade/SupprimerGrade?description=" + paramDesciptionGrade, null);
-                        Finish();
-                    });
-                    AlertDialog dialog = builder.Create();
-                    dialog.SetTitle("Suppression");
-                    dialog.SetMessage("Voulez-vous vraiment supprimer le grade " + paramDesciptionGrade + "?");
-                    dialog.Window.SetGravity(GravityFlags.Bottom);
-                    dialog.Show();
+                        async Task ViderListeGradeAsync()
+                        {
+                            await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Grade/SupprimerGrade?description=" + paramDesciptionGrade, null);
+                            Finish();
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
