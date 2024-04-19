@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using AppMobile_ProjetPompierC;
 using AppMobile_ProjetPompierC.DTO;
 using AppMobile_ProjetPompierC.Utils;
+using ProjetPompier_Mobile.Vues;
 
 /// <summary>
 /// Namespace pour les classes de type Vue.
@@ -92,7 +93,7 @@ namespace AppMobile_ProjetPompierC.Vues
         {
             try
             {
-                string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ObtenirPompier?matricule=" + paramMatriculePompier);
+                string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ObtenirPompier?nomCaserne=" + paramNomCaserne +" &matriculePompier=" + paramMatriculePompier);
                 lePompier = JsonConvert.DeserializeObject<PompierDTO>(jsonResponse);
                 lblMatriculePompierAfficher.Text = lePompier.Matricule.ToString();
                 lblGradePompierAfficher.Text = lePompier.Grade;
@@ -137,12 +138,12 @@ namespace AppMobile_ProjetPompierC.Vues
                         builder.SetPositiveButton("Non", (send, args) => { });
                         builder.SetNegativeButton("Oui", async (send, args) =>
                         {
-                            await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/SupprimerPompier?matricule=" + paramMatriculePompier, null);
+                            await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/SupprimerPompier?matriculePompier=" + paramMatriculePompier +"&nomCaserne="+paramNomCaserne, null);
                             Finish();
                         });
                         AlertDialog dialog = builder.Create();
                         dialog.SetTitle("Suppression");
-                        dialog.SetMessage("Voulez-vous vraiment supprimer le pompier"+ lePompier.Nom +" "+ lePompier.Prenom +"?");
+                        dialog.SetMessage("Voulez-vous vraiment supprimer le pompier "+ lePompier.Nom +" "+ lePompier.Prenom +"?");
                         dialog.Window.SetGravity(GravityFlags.Bottom);
                         dialog.Show();
                     }

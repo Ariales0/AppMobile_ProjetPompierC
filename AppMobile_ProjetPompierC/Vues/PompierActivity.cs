@@ -53,7 +53,7 @@ public class PompierActivity : Activity
     /// <summary>
     /// Bouton pour ajouter un pompier dans la caserne.
     /// </summary>
-    private Button btnAjouterpompier;
+    private Button btnAjouterPompier;
 
     /// <summary>
     /// ListView pour afficher les pompiers de la caserne.
@@ -78,6 +78,8 @@ public class PompierActivity : Activity
         edtNomPompier = FindViewById<EditText>(Resource.Id.edtNomPompier);
         edtPrenomPompier = FindViewById<EditText>(Resource.Id.edtPrenomPompier);
 
+        paramNomCaserne = Intent.GetStringExtra("paramNomCaserne");
+
         listViewPompier = FindViewById<ListView>(Resource.Id.lvPompier);
         listViewPompier.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
         {
@@ -89,8 +91,8 @@ public class PompierActivity : Activity
             StartActivity(activitePompierDetails);
         };
 
-        btnAjouterpompier = FindViewById<Button>(Resource.Id.btnAjouterPompier);
-        btnAjouterpompier.Click += async (sender, e) =>
+        btnAjouterPompier = FindViewById<Button>(Resource.Id.btnAjouterPompier);
+        btnAjouterPompier.Click += async (sender, e) =>
         {
             if ((int.TryParse(edtMatriculePompier.Text, out int matriculePompier)) && (edtGradePompier.Text.Length > 0) && (edtNomPompier.Text.Length > 0) && (edtPrenomPompier.Text.Length > 0))
             {
@@ -141,7 +143,7 @@ public class PompierActivity : Activity
     {
         try
         {
-            string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Caserne/ObtenirListePompier?nomCaserne="+ paramNomCaserne);
+            string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ObtenirListePompier?nomCaserne="+ paramNomCaserne+ "&seulementCapitaine=false");
             listePompier = JsonConvert.DeserializeObject<List<PompierDTO>>(jsonResponse);
             adapteurListePompier = new ListePompierAdapter(this, listePompier.ToArray()); 
             listViewPompier.Adapter = adapteurListePompier;
@@ -176,12 +178,12 @@ public class PompierActivity : Activity
                     builder.SetPositiveButton("Non", (send, args) => { });
                     builder.SetNegativeButton("Oui", async (send, args) =>
                     {
-                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ViderListePompier?nomCaserne"+paramNomCaserne, null);
+                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ViderListePompier?nomCaserne="+paramNomCaserne, null);
                         await RafraichirInterfaceDonnees();
                     });
                     AlertDialog dialog = builder.Create();
                     dialog.SetTitle("Suppression");
-                    dialog.SetMessage("Voulez-vous vraiment vider la liste des pompiers de la caserne"+paramNomCaserne+" ?");
+                    dialog.SetMessage("Voulez-vous vraiment vider la liste des pompiers de la caserne "+paramNomCaserne+" ?");
                     dialog.Window.SetGravity(GravityFlags.Bottom);
                     dialog.Show();
                 }

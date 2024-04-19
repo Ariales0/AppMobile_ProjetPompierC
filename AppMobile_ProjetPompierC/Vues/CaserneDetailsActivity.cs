@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using AppMobile_ProjetPompierC;
 using AppMobile_ProjetPompierC.DTO;
 using AppMobile_ProjetPompierC.Utils;
+using AppMobile_ProjetPompierC.Vues;
 
 /// <summary>
 /// Namespace pour les classes de type Vue.
@@ -152,6 +153,12 @@ namespace ProjetPompier_Mobile.Vues
                     Intent activiteFicheIntervention = new Intent(this, typeof(FicheInterventionActivity));
                     activiteFicheIntervention.PutExtra("paramNomCaserne", laCaserne.Nom);
                     StartActivity(activiteFicheIntervention);
+                    break;
+
+                case Resource.Id.Pompier:
+                    Intent activitePompier = new Intent(this, typeof(PompierActivity));
+                    activitePompier.PutExtra("paramNomCaserne", laCaserne.Nom);
+                    StartActivity(activitePompier);
                     break;
 
                 case Resource.Id.Retour:

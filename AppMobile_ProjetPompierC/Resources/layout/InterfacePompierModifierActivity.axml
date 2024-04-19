@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content" />
             <EditText
                 android:layout_column="1"
-                android:id="@+id/edtVilleModifier"
+                android:id="@+id/edtNomPompierModifier"
                 android:layout_height="40.5dp"
                 android:inputType="text"
                 android:layout_width="match_parent" />
