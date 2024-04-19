@@ -162,6 +162,8 @@ public class PompierActivity : Activity
             listeGrade = JsonConvert.DeserializeObject<List<GradeDTO>>(jsonResponseGrade);
             adapteurListeGrade = new ListeGradeAdapter(this, listeGrade.ToArray());
             spinnerGradePompier.Adapter = adapteurListeGrade;
+
+            edtMatriculePompier.Text = edtNomPompier.Text = edtPrenomPompier.Text = string.Empty;
         }
         catch (Exception ex)
         {
