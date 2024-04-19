@@ -92,7 +92,7 @@ public class PompierActivity : Activity
         btnAjouterpompier = FindViewById<Button>(Resource.Id.btnAjouterPompier);
         btnAjouterpompier.Click += async (sender, e) =>
         {
-            if ((int.TryParse(edtMatriculePompier.Text, out int matriculePompier) && (edtGradePompier.Text.Length > 0) && (edtNomPompier.Text.Length > 0) && (edtPrenomPompier.Text.Length > 0))
+            if ((int.TryParse(edtMatriculePompier.Text, out int matriculePompier)) && (edtGradePompier.Text.Length > 0) && (edtNomPompier.Text.Length > 0) && (edtPrenomPompier.Text.Length > 0))
             {
                 try
                 {
@@ -114,13 +114,13 @@ public class PompierActivity : Activity
                 catch (Exception ex)
                 {
 
-                    //DialoguesUtils.AfficherMessageOK(this, "Erreur", ex.Message);
+                    DialoguesUtils.AfficherMessageOK(this, "Erreur", ex.Message);
                 }
 
             }
             else
             {
-                //DialoguesUtils.AfficherMessageOK(this, "Erreur", "Veuillez remplir tous les champs...");
+                DialoguesUtils.AfficherMessageOK(this, "Erreur", "Veuillez remplir tous les champs...");
             }
         };
     }
@@ -148,7 +148,7 @@ public class PompierActivity : Activity
         }
         catch (Exception ex)
         {
-            //DialoguesUtils.AfficherMessageOK(this, "Erreur", ex.Message);
+            DialoguesUtils.AfficherMessageOK(this, "Erreur", ex.Message);
         }
     }
 
