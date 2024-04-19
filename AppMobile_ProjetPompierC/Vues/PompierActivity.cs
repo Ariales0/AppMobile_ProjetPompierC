@@ -169,27 +169,27 @@ public class PompierActivity : Activity
         switch (item.ItemId)
         {
             case Resource.Id.ViderPompierActivity:
-                //bool reponseQuestion = DialoguesUtils.AfficherDialogueQuestionOuiNon
-                //try
-                //{
-                //    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                //    builder.SetPositiveButton("Non", (send, args) => { });
-                //    builder.SetNegativeButton("Oui", async (send, args) =>
-                //    {
-                //        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Caserne/ViderListeCaserne", null);
-                //        await RafraichirInterfaceDonnees();
-                //    });
-                //    AlertDialog dialog = builder.Create();
-                //    dialog.SetTitle("Suppression");
-                //    dialog.SetMessage("Voulez-vous vraiment vider la liste des casernes ?");
-                //    dialog.Window.SetGravity(GravityFlags.Bottom);
-                //    dialog.Show();
-                //}
-                //catch (Exception ex)
-                //{
+                
+                try
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.SetPositiveButton("Non", (send, args) => { });
+                    builder.SetNegativeButton("Oui", async (send, args) =>
+                    {
+                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ViderListePompier?nomCaserne"+paramNomCaserne, null);
+                        await RafraichirInterfaceDonnees();
+                    });
+                    AlertDialog dialog = builder.Create();
+                    dialog.SetTitle("Suppression");
+                    dialog.SetMessage("Voulez-vous vraiment vider la liste des pompiers de la caserne"+paramNomCaserne+" ?");
+                    dialog.Window.SetGravity(GravityFlags.Bottom);
+                    dialog.Show();
+                }
+                catch (Exception ex)
+                {
 
-                //    //DialoguesUtils.AfficherMessageOK(this, "Erreur", ex.Message);
-                //}
+                    //DialoguesUtils.AfficherMessageOK(this, "Erreur", ex.Message);
+                }
                 break;
 
             case Resource.Id.RetourPompierActivity:
