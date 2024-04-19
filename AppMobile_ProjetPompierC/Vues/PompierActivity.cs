@@ -31,22 +31,22 @@ public class PompierActivity : Activity
     private ListePompierAdapter adapteurListePompier;
 
     /// <summary>
-    /// Attribut représentant le champ d'édition du matricule du pompier utilise pour l'ajout d'un pompier.
+    /// Attribut représentant le champ d'édition du matricule du pompier .
     /// </summary>
     private EditText edtMatriculePompier;
 
     /// <summary>
-    /// Attribut représentant le champ d'édition du grade du pompier utilise pour l'ajout d'un pompier.
+    /// Attribut représentant le champ d'édition du grade du pompier .
     /// </summary>
     private EditText edtGradePompier;
 
     /// <summary>
-    /// Attribut représentant le champ d'édition du nom du pompier utilise pour l'ajout d'un pompier.
+    /// Attribut représentant le champ d'édition du nom du pompier .
     /// </summary>
     private EditText edtNomPompier;
 
     /// <summary>
-    /// Attribut représentant le champ d'édition du prenom du pompier utilise pour l'ajout d'un pompier.
+    /// Attribut représentant le champ d'édition du prenom du pompier .
     /// </summary>
     private EditText edtPrenomPompier;
 
