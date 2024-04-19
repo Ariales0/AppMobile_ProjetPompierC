@@ -26,9 +26,19 @@ public class PompierActivity : Activity
     private List<PompierDTO> listePompier;
 
     /// <summary>
+    /// Liste des grades.
+    /// </summary>
+    private List<GradeDTO> listeGrade;
+
+    /// <summary>
     /// Adapter pour la liste des pompier.
     /// </summary>
     private ListePompierAdapter adapteurListePompier;
+
+    /// <summary>
+    /// Adapter pour la liste des grade.
+    /// </summary>
+    private ListeGradeAdapter adapteurListeGrade;
 
     /// <summary>
     /// Attribut représentant le champ d'édition du matricule du pompier .
@@ -36,9 +46,9 @@ public class PompierActivity : Activity
     private EditText edtMatriculePompier;
 
     /// <summary>
-    /// Attribut représentant le champ d'édition du grade du pompier .
+    /// Liste deroulante qui contient les grades .
     /// </summary>
-    private EditText edtGradePompier;
+    private Spinner spinnerGradePompier;
 
     /// <summary>
     /// Attribut représentant le champ d'édition du nom du pompier .
@@ -74,7 +84,7 @@ public class PompierActivity : Activity
         SetContentView(Resource.Layout.InterfacePompierActivity);
 
         edtMatriculePompier = FindViewById<EditText>(Resource.Id.edtMatriculePompier);
-        edtGradePompier = FindViewById<EditText>(Resource.Id.edtGradePompier);
+        spinnerGradePompier = FindViewById<Spinner>(Resource.Id.spGradePompier);
         edtNomPompier = FindViewById<EditText>(Resource.Id.edtNomPompier);
         edtPrenomPompier = FindViewById<EditText>(Resource.Id.edtPrenomPompier);
 
@@ -94,16 +104,16 @@ public class PompierActivity : Activity
         btnAjouterPompier = FindViewById<Button>(Resource.Id.btnAjouterPompier);
         btnAjouterPompier.Click += async (sender, e) =>
         {
-            if ((int.TryParse(edtMatriculePompier.Text, out int matriculePompier)) && (edtGradePompier.Text.Length > 0) && (edtNomPompier.Text.Length > 0) && (edtPrenomPompier.Text.Length > 0))
+            if ((int.TryParse(edtMatriculePompier.Text, out int matriculePompier)) && (spinnerGradePompier.SelectedItem != null) && (edtNomPompier.Text.Length > 0) && (edtPrenomPompier.Text.Length > 0))
             {
                 try
                 {
-                    string lePompierAjoute = edtGradePompier.Text + " " + edtNomPompier.Text + " " + edtPrenomPompier.Text;
+                    string lePompierAjoute = spinnerGradePompier.SelectedItem.ToString() + " " + edtNomPompier.Text + " " + edtPrenomPompier.Text;
 
                     PompierDTO pompierDTO = new PompierDTO
                     {
                         Matricule = matriculePompier,
-                        Grade = edtGradePompier.Text,
+                        Grade = spinnerGradePompier.SelectedItem.ToString(),
                         Nom = edtNomPompier.Text,
                         Prenom = edtPrenomPompier.Text
                     };
@@ -143,10 +153,15 @@ public class PompierActivity : Activity
     {
         try
         {
-            string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ObtenirListePompier?nomCaserne="+ paramNomCaserne+ "&seulementCapitaine=false");
-            listePompier = JsonConvert.DeserializeObject<List<PompierDTO>>(jsonResponse);
+            string jsonResponsePompier = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ObtenirListePompier?nomCaserne="+ paramNomCaserne+ "&seulementCapitaine=false");
+            listePompier = JsonConvert.DeserializeObject<List<PompierDTO>>(jsonResponsePompier);
             adapteurListePompier = new ListePompierAdapter(this, listePompier.ToArray()); 
             listViewPompier.Adapter = adapteurListePompier;
+
+            string jsonResponseGrade = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Grade/ObtenirListeGrade");
+            listeGrade = JsonConvert.DeserializeObject<List<GradeDTO>>(jsonResponseGrade);
+            adapteurListeGrade = new ListeGradeAdapter(this, listeGrade.ToArray());
+            spinnerGradePompier.Adapter = adapteurListeGrade;
         }
         catch (Exception ex)
         {

@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:minWidth="25px"
-	android:minHeight="25px">
-	<TextView
-		android:text="Liste de(s) pompier(s) : "
-		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:id="@+id/tvListePompier" />
-	<ListView
-		android:minWidth="25px"
-		android:minHeight="25px"
-		android:layout_width="match_parent"
-		android:layout_height="164.0dp"
-		android:id="@+id/lvPompier"
-		android:layout_marginBottom="13.5dp"
-		android:layout_marginTop="28.0dp" />
-		<TableLayout
-		android:minWidth="25px"
-		android:minHeight="25px"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:id="@+id/tlAjoutPompier">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <TextView
+        android:text="Liste de(s) pompier(s) : "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvListePompier" />
+    <ListView
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="164.0dp"
+        android:id="@+id/lvPompier"
+        android:layout_marginBottom="13.5dp"
+        android:layout_marginTop="28.0dp" />
+    <TableLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tlAjoutPompier">
         <TableRow
             android:id="@+id/trMatriculePompier"
             android:layout_height="93.0dp"
@@ -65,12 +65,11 @@
                 android:layout_marginLeft="0.0dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            <EditText
-                android:layout_column="1"
-                android:id="@+id/edtGradePompier"
-                android:layout_height="40.5dp"
-                android:inputType="text"
-                android:layout_width="match_parent" />
+            <Spinner
+                android:id="@+id/spGradePompier"
+                android:layout_width="wrap_content"
+                android:layout_height="33.9dp"/>
+
         </TableRow>
         <TableRow
             android:id="@+id/trNomPompier"
@@ -110,13 +109,13 @@
                 android:inputType="text"
                 android:layout_width="match_parent" />
         </TableRow>
-	</TableLayout>
-	<Button
-		android:text="AJOUTER"
-		android:layout_width="144.5dp"
-		android:layout_height="38.0dp"
-		android:id="@+id/btnAjouterPompier"
-		android:layout_marginLeft="125.0dp"
-		android:layout_marginTop="26.0dp"
-		android:layout_marginBottom="0.0dp" />
+    </TableLayout>
+    <Button
+        android:text="AJOUTER"
+        android:layout_width="144.5dp"
+        android:layout_height="38.0dp"
+        android:id="@+id/btnAjouterPompier"
+        android:layout_marginLeft="125.0dp"
+        android:layout_marginTop="26.0dp"
+        android:layout_marginBottom="0.0dp" />
 </LinearLayout>
