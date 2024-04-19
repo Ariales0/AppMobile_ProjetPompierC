@@ -67,7 +67,7 @@ namespace AppMobile_ProjetPompierC.Vues
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.InterfaceCaserne_Activity);
+            SetContentView(Resource.Layout.InterfaceCaserneActivity);
 
             listViewCaserne = FindViewById<ListView>(Resource.Id.listViewCaserne);
             listViewCaserne.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
@@ -153,7 +153,7 @@ namespace AppMobile_ProjetPompierC.Vues
         /// <returns>Retourne True si l'optionMenu est bien créé.</returns>
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            MenuInflater.Inflate(Resource.Menu.InterfaceCaserne_ActivityMenu, menu);
+            MenuInflater.Inflate(Resource.Menu.CaserneActivityOptionsMenu, menu);
             return base.OnCreateOptionsMenu(menu);
         }
 

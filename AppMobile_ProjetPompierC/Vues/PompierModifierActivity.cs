@@ -64,7 +64,7 @@ namespace ProjetPompier_Mobile.Vues
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.InterfacePompierModifierActivity);
+            SetContentView(Resource.Layout.InterfacePompierModifier);
 
             paramNomCaserne = Intent.GetStringExtra("paramNomCaserne");
             paramMatriculePompier = Intent.GetIntExtra("paramMatriculePompier", 0);

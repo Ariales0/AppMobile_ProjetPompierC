@@ -50,7 +50,7 @@ public class GradeActivity : Activity
     protected override void OnCreate(Bundle savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
-        SetContentView(Resource.Layout.InterfaceGrade);
+        SetContentView(Resource.Layout.InterfaceGradeActivity);
 
         edtDesciptionGrade = FindViewById<EditText>(Resource.Id.edtDescriptionGradeAjout);
 

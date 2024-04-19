@@ -65,7 +65,7 @@ namespace AppMobile_ProjetPompierC.Vues
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.InterfacePompierDetailsActivity);
+            SetContentView(Resource.Layout.InterfacePompierDetails);
 
             lblMatriculePompierAfficher = FindViewById<TextView>(Resource.Id.tvMatriculePompierDetails);
             lblGradePompierAfficher = FindViewById<TextView>(Resource.Id.tvGradePompierDetails);

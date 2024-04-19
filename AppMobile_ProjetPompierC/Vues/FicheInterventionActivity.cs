@@ -33,7 +33,7 @@ namespace AppMobile_ProjetPompierC.Vues
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.InterfaceFicheIntervention_Activity);
+            SetContentView(Resource.Layout.InterfaceFicheInterventionActivity);
 
             paramNomCaserne = Intent.GetStringExtra("paramNomCaserne");
 
@@ -131,7 +131,7 @@ namespace AppMobile_ProjetPompierC.Vues
         /// <returns>Retourne True si l'optionMenu est bien créé.</returns>
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            MenuInflater.Inflate(Resource.Menu.InterfaceFicheIntervention_ActivityMenu, menu);
+            MenuInflater.Inflate(Resource.Menu.FicheInterventionActivityOptionsMenu, menu);
             return base.OnCreateOptionsMenu(menu);
         }
 

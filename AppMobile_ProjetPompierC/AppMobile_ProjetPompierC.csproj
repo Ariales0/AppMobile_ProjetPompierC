@@ -11,15 +11,15 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Resources\layout\InterfaceCaserneDetails_Activity.axml" />
-    <None Remove="Resources\layout\InterfaceCaserneModifier_Activity.axml" />
-    <None Remove="Resources\layout\InterfaceCaserne_Activity.axml" />
-    <None Remove="Resources\layout\InterfaceFicheIntervention_Activity.axml" />
-    <None Remove="Resources\layout\InterfaceGrade.axml" />
+    <None Remove="Resources\layout\InterfaceCaserneActivity.axml" />
+    <None Remove="Resources\layout\InterfaceCaserneDetails.axml" />
+    <None Remove="Resources\layout\InterfaceCaserneModifier.axml" />
+    <None Remove="Resources\layout\InterfaceFicheInterventionActivity.axml" />
+    <None Remove="Resources\layout\InterfaceGradeActivity.axml" />
     <None Remove="Resources\layout\InterfaceGradeDetailsModifier.axml" />
     <None Remove="Resources\layout\InterfacePompierActivity.axml" />
-    <None Remove="Resources\layout\InterfacePompierDetailsActivity.axml" />
-    <None Remove="Resources\layout\InterfacePompierModifierActivity.axml" />
+    <None Remove="Resources\layout\InterfacePompierDetails.axml" />
+    <None Remove="Resources\layout\InterfacePompierModifier.axml" />
     <None Remove="Resources\layout\ListeAdapteurCaserneItem.xml" />
     <None Remove="Resources\layout\ListeAdapteurFicheInterventionItem.xml" />
     <None Remove="Resources\layout\ListeAdapteurGradeItem.xml" />
