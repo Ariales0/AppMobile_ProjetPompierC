@@ -141,15 +141,18 @@ public class GradeActivity : Activity
 
                 try
                 {
-                    bool reponse = DialoguesUtils.AfficherDialogueQuestionOuiNon(this, "Vider la liste des grades !?", "Voulez-vous vraiment vider la liste des grades ?");
-                    if (reponse)
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.SetPositiveButton("Non", (send, args) => { });
+                    builder.SetNegativeButton("Oui", async (send, args) =>
                     {
-                        async Task ViderListeGradeAsync()
-                        {
-                            await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Grade/ViderListeGrade", null);
-                            await RafraichirInterfaceDonnees();
-                        }
-                    }
+                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Grade/ViderListeGrade", null);
+                        await RafraichirInterfaceDonnees();
+                    });
+                    AlertDialog dialog = builder.Create();
+                    dialog.SetTitle("Suppression");
+                    dialog.SetMessage("Voulez-vous vraiment vider la liste des grades ?");
+                    dialog.Window.SetGravity(GravityFlags.Bottom);
+                    dialog.Show();
                 }
                 catch (Exception ex)
                 {
