@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using AppMobile_ProjetPompierC;
 using AppMobile_ProjetPompierC.DTO;
 using AppMobile_ProjetPompierC.Utils;
+using AppMobile_ProjetPompierC.Adapters;
 
 /// <summary>
 /// Namespace pour les classes de type Vue.
@@ -30,6 +31,16 @@ namespace ProjetPompier_Mobile.Vues
         private int paramMatriculePompier;
 
         /// <summary>
+        /// Liste des grades.
+        /// </summary>
+        private List<GradeDTO> listeGrade;
+
+        /// <summary>
+        /// Adapter pour la liste des grade.
+        /// </summary>
+        private ListeGradeAdapter adapteurListeGrade;
+
+        /// <summary>
         /// Attribut représentant le pompier en objet PompierDTO.
         /// </summary>
         private PompierDTO lePompier;
@@ -40,9 +51,14 @@ namespace ProjetPompier_Mobile.Vues
         private TextView edtMatriculePompierModifier;
 
         /// <summary>
-        /// Attribut représentant le champ d'affichage du grade du pompier.
+        /// Liste deroulante qui contient les grades .
         /// </summary>
-        private TextView edtGradePompierModifier;
+        private Spinner spinnerGradePompier;
+
+        /// <summary>
+        /// Grade séléctionné dans le spinner .
+        /// </summary>
+        string gradeSelectionne;
 
         /// <summary>
         /// Attribut représentant le champ d'affichage du nom du pompier.
@@ -70,23 +86,31 @@ namespace ProjetPompier_Mobile.Vues
             paramMatriculePompier = Intent.GetIntExtra("paramMatriculePompier", 0);
 
             edtMatriculePompierModifier = FindViewById<TextView>(Resource.Id.tvMatriculePompierModifier);
-            edtGradePompierModifier = FindViewById<TextView>(Resource.Id.edtGradePompierModifier);
             edtNomPompierModifier = FindViewById<TextView>(Resource.Id.edtNomPompierModifier);
             edtPrenomPompierModifier = FindViewById<TextView>(Resource.Id.edtPrenomPompierModifier);
+
+            spinnerGradePompier = FindViewById<Spinner>(Resource.Id.spGradePompierModifier);
+            
+            spinnerGradePompier.ItemSelected += (sender, e) =>
+            {
+                GradeDTO gradeDTOSelecionne = new GradeDTO();
+                gradeDTOSelecionne = listeGrade[e.Position];
+                gradeSelectionne = gradeDTOSelecionne.Description;
+            };
 
             btnModifierPompier = FindViewById<Button>(Resource.Id.btnModifierPompier);
             btnModifierPompier.Click += async (sender, e) =>
             {
-                if ((edtGradePompierModifier.Text.Length > 0) && (edtNomPompierModifier.Text.Length > 0) && (edtPrenomPompierModifier.Text.Length > 0))
+                if ((!string.IsNullOrEmpty(gradeSelectionne)) && (edtNomPompierModifier.Text.Length > 0) && (edtPrenomPompierModifier.Text.Length > 0))
                 {
                     try
                     {
-                        string lePompierModifier = edtGradePompierModifier.Text + " " + edtNomPompierModifier.Text + " " + edtPrenomPompierModifier.Text;
+                        string lePompierModifier = gradeSelectionne + " " + edtNomPompierModifier.Text + " " + edtPrenomPompierModifier.Text;
 
                         PompierDTO pompierDTO = new PompierDTO
                         {
                             Matricule = paramMatriculePompier,
-                            Grade = edtGradePompierModifier.Text,
+                            Grade = gradeSelectionne,
                             Nom = edtNomPompierModifier.Text,
                             Prenom = edtPrenomPompierModifier.Text
                         };
@@ -127,9 +151,17 @@ namespace ProjetPompier_Mobile.Vues
                 string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ObtenirPompier?nomCaserne=" + paramNomCaserne + " &matriculePompier=" + paramMatriculePompier);
                 lePompier = JsonConvert.DeserializeObject<PompierDTO>(jsonResponse);
                 edtMatriculePompierModifier.Text = lePompier.Matricule.ToString();
-                edtGradePompierModifier.Text = lePompier.Grade;
                 edtNomPompierModifier.Text = lePompier.Nom;
                 edtPrenomPompierModifier.Text = lePompier.Prenom;
+                
+
+                string jsonResponseGrade = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Grade/ObtenirListeGrade");
+                listeGrade = JsonConvert.DeserializeObject<List<GradeDTO>>(jsonResponseGrade);
+                adapteurListeGrade = new ListeGradeAdapter(this, listeGrade.ToArray());
+                spinnerGradePompier.Adapter = adapteurListeGrade;
+                GradeDTO gradeDTODuPompier = new GradeDTO(lePompier.Grade);
+                int gradeIndex = listeGrade.FindIndex(item => item.Description == lePompier.Grade);
+                spinnerGradePompier.SetSelection(gradeIndex);
 
             }
             catch (Exception)

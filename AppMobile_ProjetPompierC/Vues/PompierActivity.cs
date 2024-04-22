@@ -51,6 +51,11 @@ public class PompierActivity : Activity
     private Spinner spinnerGradePompier;
 
     /// <summary>
+    /// Grade séléctionné dans le spinner .
+    /// </summary>
+    string gradeSelectionne;
+
+    /// <summary>
     /// Attribut représentant le champ d'édition du nom du pompier .
     /// </summary>
     private EditText edtNomPompier;
@@ -84,11 +89,19 @@ public class PompierActivity : Activity
         SetContentView(Resource.Layout.InterfacePompierActivity);
 
         edtMatriculePompier = FindViewById<EditText>(Resource.Id.edtMatriculePompier);
-        spinnerGradePompier = FindViewById<Spinner>(Resource.Id.spGradePompier);
+        
         edtNomPompier = FindViewById<EditText>(Resource.Id.edtNomPompier);
         edtPrenomPompier = FindViewById<EditText>(Resource.Id.edtPrenomPompier);
 
         paramNomCaserne = Intent.GetStringExtra("paramNomCaserne");
+
+        spinnerGradePompier = FindViewById<Spinner>(Resource.Id.spGradePompier);
+        spinnerGradePompier.ItemSelected += (sender, e) =>
+        {
+            GradeDTO gradeDTOSelecionne = new GradeDTO();
+            gradeDTOSelecionne = listeGrade[e.Position];
+            gradeSelectionne = gradeDTOSelecionne.Description;
+        };
 
         listViewPompier = FindViewById<ListView>(Resource.Id.lvPompier);
         listViewPompier.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
@@ -104,16 +117,16 @@ public class PompierActivity : Activity
         btnAjouterPompier = FindViewById<Button>(Resource.Id.btnAjouterPompier);
         btnAjouterPompier.Click += async (sender, e) =>
         {
-            if ((int.TryParse(edtMatriculePompier.Text, out int matriculePompier)) && (spinnerGradePompier.SelectedItem != null) && (edtNomPompier.Text.Length > 0) && (edtPrenomPompier.Text.Length > 0))
+            if ((int.TryParse(edtMatriculePompier.Text, out int matriculePompier)) && (!string.IsNullOrEmpty(gradeSelectionne)) && (edtNomPompier.Text.Length > 0) && (edtPrenomPompier.Text.Length > 0))
             {
                 try
                 {
-                    string lePompierAjoute = spinnerGradePompier.SelectedItem.ToString() + " " + edtNomPompier.Text + " " + edtPrenomPompier.Text;
+                    string lePompierAjoute = gradeSelectionne + " " + edtNomPompier.Text + " " + edtPrenomPompier.Text;
 
                     PompierDTO pompierDTO = new PompierDTO
                     {
                         Matricule = matriculePompier,
-                        Grade = spinnerGradePompier.SelectedItem.ToString(),
+                        Grade = gradeSelectionne,
                         Nom = edtNomPompier.Text,
                         Prenom = edtPrenomPompier.Text
                     };
