@@ -14,34 +14,64 @@ public class TypeVehiculeDetailsModifierActivity : Activity
     #region Proprietes
 
     /// <summary>
-    /// Description de la caserne envoye par l'activite precedent.
+    /// Type du type envoye par l'activite precedent.
     /// </summary>
-    private string paramDesciptionGrade;
+    private string paramTypeTypeVehicule;
+
+	/// <summary>
+	/// Code du type envoye par l'activite precedent.
+	/// </summary>
+	private string paramCodeTypeVehicule;
+
+	/// <summary>
+	/// Nombre de personne du type envoye par l'activite precedent.
+	/// </summary>
+	private string paramNbPersonneTypeVehicule;
+
+	/// <summary>
+	/// Attribut représentant le pompier en objet PompierDTO.
+	/// </summary>
+	private PompierDTO lePompier;
 
     /// <summary>
-    /// Attribut représentant le pompier en objet PompierDTO.
+    /// Type du type afficher.
     /// </summary>
-    private PompierDTO lePompier;
+    private TextView lblTypeTypeVehicule;
 
     /// <summary>
-    /// Desciption du grade afficher.
+    /// Type du type pour modification.
     /// </summary>
-    private TextView lblDesciptionGrade;
+    private EditText edtTypeTypeVehicule;
+
+	/// <summary>
+	/// Code du type afficher.
+	/// </summary>
+	private TextView lblCodeTypeVehicule;
+
+	/// <summary>
+	/// Code du type pour modification.
+	/// </summary>
+	private EditText edtCodeTypeVehicule;
+
+	/// <summary>
+	/// Nombre de personne du type afficher.
+	/// </summary>
+	private TextView lblNbPersonneTypeVehicule;
 
     /// <summary>
-    /// Desciption du grade pour modification.
+    /// Nombre de personne du type pour modification.
     /// </summary>
-    private EditText edtDesciptionGrade;
+    private EditText edtNbPersonneTypeVehicule;
 
-    /// <summary>
-    /// CheckBox qui rend accessible ou non la modification du grade.
-    /// </summary>
-    private CheckBox checkBoxModification;
+	/// <summary>
+	/// CheckBox qui rend accessible ou non la modification du grade.
+	/// </summary>
+	private CheckBox checkBoxModification;
 
     /// <summary>
     /// Bouton d'ajout d'un grade.
     /// </summary>
-    private Button btnModifierGrade;
+    private Button btnModifierTypeVehicule;
 
     #endregion Proprietes
     #region Methodes
@@ -53,26 +83,38 @@ public class TypeVehiculeDetailsModifierActivity : Activity
     protected override void OnCreate(Bundle savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
-        SetContentView(Resource.Layout.InterfaceGradeDetailsModifier);
+        SetContentView(Resource.Layout.InterfaceTypeVehiculeDetailsModifier);
 
-        lblDesciptionGrade = FindViewById<TextView>(Resource.Id.tvDescriptionGradeDetails);
-        edtDesciptionGrade = FindViewById<EditText>(Resource.Id.tvGradeDescriptionModifier);
+        lblTypeTypeVehicule = FindViewById<TextView>(Resource.Id.tvTypeTypeVehiculeDetails);
+        edtTypeTypeVehicule = FindViewById<EditText>(Resource.Id.tvTypeTypeVehiculeModifier);
 
-        paramDesciptionGrade = Intent.GetStringExtra("paramDesciptionGrade");
+		lblCodeTypeVehicule = FindViewById<TextView>(Resource.Id.tvCodeTypeVehiculeDetails);
+		edtCodeTypeVehicule = FindViewById<EditText>(Resource.Id.tvCodeTypeVehiculeModifier);
 
-        btnModifierGrade = FindViewById<Button>(Resource.Id.btnModifierGrade);
-        btnModifierGrade.Click += async (sender, e) =>
+		lblNbPersonneTypeVehicule = FindViewById<TextView>(Resource.Id.tvNbPersonneTypeVehiculeDetails);
+		edtNbPersonneTypeVehicule = FindViewById<EditText>(Resource.Id.tvNbPersonneTypeVehiculeModifier);
+
+		paramTypeTypeVehicule = Intent.GetStringExtra("paramTypeTypeVehicule");
+		paramCodeTypeVehicule = Intent.GetStringExtra("paramCodeTypeVehicule");
+		paramNbPersonneTypeVehicule = Intent.GetStringExtra("paramNbPersonneTypeVehicule");
+
+		btnModifierTypeVehicule = FindViewById<Button>(Resource.Id.btnModifierTypeVehicule);
+        btnModifierTypeVehicule.Click += async (sender, e) =>
         {
-            if (edtDesciptionGrade.Text.Length > 0)
-            {
+            if (edtTypeTypeVehicule.Text.Length > 0 || int.Parse(edtNbPersonneTypeVehicule.Text) > 0 )
+			{
                 try
                 {
-                    string desciptionGrade = edtDesciptionGrade.Text;
-                    GradeDTO gradeDTO = new GradeDTO(desciptionGrade);
+                    string typeTypeVehicule = edtTypeTypeVehicule.Text;
+					string codeTypeVehicule = edtCodeTypeVehicule.Text;
+					int nbPersonneTypeVehicule = int.Parse(edtNbPersonneTypeVehicule.Text);
 
-                    await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Grade/ModifierGrade?descriptionAvantChangement=" + lblDesciptionGrade.Text + "&descriptionApresChangement=" + edtDesciptionGrade.Text, null);
-                    DialoguesUtils.AfficherToasts(this,"Le grade "+ desciptionGrade + " est modifié !!!");
+					TypeVehiculeDTO typeDTO = new TypeVehiculeDTO(typeTypeVehicule, codeTypeVehicule, nbPersonneTypeVehicule);
+                    /* Enlever les commentaires quand l'API sera prêt :)
+                    await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypeVehicule/ModifierTypeVehicule", typeDTO);
+                    DialoguesUtils.AfficherToasts(this,"Le type "+ typeTypeVehicule + " est modifié !!!");
                     Finish();
+                    */
                 }
                 catch (Exception ex)
                 {
@@ -87,13 +129,15 @@ public class TypeVehiculeDetailsModifierActivity : Activity
             }
         };
 
-        checkBoxModification = FindViewById<CheckBox>(Resource.Id.checkBoxGradeModifier);
+        checkBoxModification = FindViewById<CheckBox>(Resource.Id.checkBoxTypeVehiculeModifier);
         checkBoxModification.CheckedChange += (sender, e) =>
         {
             bool isChecked = checkBoxModification.Checked;
-            btnModifierGrade.Enabled = isChecked;
-            edtDesciptionGrade.Enabled = isChecked;
-        };
+            btnModifierTypeVehicule.Enabled = isChecked;
+            edtTypeTypeVehicule.Enabled = isChecked;
+			edtCodeTypeVehicule.Enabled = isChecked;
+			edtNbPersonneTypeVehicule.Enabled = isChecked;
+		};
     }
 
     /// <summary>
@@ -113,14 +157,17 @@ public class TypeVehiculeDetailsModifierActivity : Activity
     {
         try
         {
-            //Obtenir grade de l'API n'est pas utile
-            lblDesciptionGrade.Text = paramDesciptionGrade;
-            edtDesciptionGrade.Text = paramDesciptionGrade;
+            //Ajouter l'obtention du type par l'API
+            lblTypeTypeVehicule.Text = paramTypeTypeVehicule;
+            edtTypeTypeVehicule.Text = paramTypeTypeVehicule;
+			lblNbPersonneTypeVehicule.Text = paramNbPersonneTypeVehicule;
+            edtNbPersonneTypeVehicule.Text = paramNbPersonneTypeVehicule;
 
-            btnModifierGrade.Enabled = false;
-            edtDesciptionGrade.Enabled = false;
+			btnModifierTypeVehicule.Enabled = false;
+            edtTypeTypeVehicule.Enabled = false;
+			edtNbPersonneTypeVehicule.Enabled = false;
 
-        }
+		}
         catch (Exception)
         {
             Finish();
@@ -133,7 +180,7 @@ public class TypeVehiculeDetailsModifierActivity : Activity
     /// <returns>Retourne True si l'optionMenu est bien créé.</returns>
     public override bool OnCreateOptionsMenu(IMenu menu)
     {
-        MenuInflater.Inflate(Resource.Menu.GradeDetailsModifierOptionsMenu, menu);
+        MenuInflater.Inflate(Resource.Menu.TypeVehiculeDetailsModifierOptionsMenu, menu);
         return base.OnCreateOptionsMenu(menu);
     }
 
@@ -144,19 +191,19 @@ public class TypeVehiculeDetailsModifierActivity : Activity
     {
         switch (item.ItemId)
         {
-            case Resource.Id.SupprimerGradeDM:
+            case Resource.Id.SupprimerTypeVehiculeDM:
                 try
                 {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.SetPositiveButton("Non", (send, args) => { });
                     builder.SetNegativeButton("Oui", async (send, args) =>
                     {
-                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Grade/SupprimerGrade?description=" + paramDesciptionGrade, null);
+                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypeVehicule/SupprimerTypeVehicule?code=" + paramCodeTypeVehicule, null);
                         Finish();
                     });
                     AlertDialog dialog = builder.Create();
                     dialog.SetTitle("Suppression");
-                    dialog.SetMessage("Voulez-vous vraiment supprimer le grade " + paramDesciptionGrade + "?");
+                    dialog.SetMessage("Voulez-vous vraiment supprimer le type " + paramCodeTypeVehicule + "?");
                     dialog.Window.SetGravity(GravityFlags.Bottom);
                     dialog.Show();
                 }
