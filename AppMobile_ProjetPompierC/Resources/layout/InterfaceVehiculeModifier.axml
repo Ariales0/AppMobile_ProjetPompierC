@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+	<TableLayout
+		android:minWidth="25px"
+		android:minHeight="25px"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/tlVehiculeModifier"
+		android:padding="35dp">
+        <TableRow
+            android:id="@+id/trVehiculeModifier"
+            android:layout_height="93.0dp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent">
+            <TextView
+                android:text="Vin :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblVinVehiculeModifier"
+                android:layout_marginRight="0.0dp"
+                android:layout_marginLeft="0.0dp"
+                android:layout_width="126.0dp"
+                android:layout_marginBottom="0.0dp"
+                android:layout_height="35.0dp" />
+            <TextView
+                android:text="-"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="1"
+                android:id="@+id/tvVinVehiculeModifier"
+                android:layout_marginRight="0.0dp"
+                android:layout_marginLeft="0.0dp"
+                android:layout_width="173.0dp"
+                android:layout_height="35.0dp" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/trTypeVehiculeModifier"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Type :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblTypeVehiculeModifier"
+                android:layout_marginLeft="0.0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/spTypeVehiculeModifier"
+                android:layout_width="wrap_content"
+                android:layout_height="33.9dp"/>
+        </TableRow>
+        <TableRow
+            android:id="@+id/trMarqueVehiculeModifier"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Marque :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblMarqueVehiculeModifier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_column="1"
+                android:id="@+id/edtMarqueVehiculeModifier"
+                android:layout_height="40.5dp"
+                android:inputType="text"
+                android:layout_width="match_parent" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/trModeleVehiculeModifier"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Modèle :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblModeleVehiculeModifer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_column="1"
+                android:id="@+id/edtModeleVehiculeModifier"
+                android:layout_height="40.5dp"
+                android:inputType="text"
+                android:layout_width="match_parent" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/trAnneeVehiculeModifier"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Année :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblAnneeVehiculeModifer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_column="1"
+                android:id="@+id/edtAnneeVehiculeModifier"
+                android:layout_height="40.5dp"
+                android:inputType="text"
+                android:layout_width="match_parent" />
+        </TableRow>
+	</TableLayout>
+	<Button
+		android:text="MODIFIER"
+		android:layout_width="144.5dp"
+		android:layout_height="38.0dp"
+		android:id="@+id/btnModifierPompier"
+        android:layout_gravity="center"
+		android:layout_marginLeft="0.0dp"
+		android:layout_marginTop="26.0dp"
+		android:layout_marginBottom="0.0dp" />
+</LinearLayout>

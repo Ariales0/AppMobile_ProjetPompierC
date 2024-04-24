@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0-android</TargetFramework>
-    <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
     <OutputType>Exe</OutputType>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -20,15 +19,27 @@
     <None Remove="Resources\layout\InterfacePompierActivity.axml" />
     <None Remove="Resources\layout\InterfacePompierDetails.axml" />
     <None Remove="Resources\layout\InterfacePompierModifier.axml" />
+    <None Remove="Resources\layout\InterfaceTypeVehiculeActivity.axml" />
+    <None Remove="Resources\layout\InterfaceTypeVehiculeDetailsModifier.axml" />
+    <None Remove="Resources\layout\InterfaceVehiculeActivity.axml" />
+    <None Remove="Resources\layout\InterfaceVehiculeDetails.axml" />
+    <None Remove="Resources\layout\InterfaceVehiculeModifier.axml" />
     <None Remove="Resources\layout\ListeAdapteurCaserneItem.xml" />
     <None Remove="Resources\layout\ListeAdapteurFicheInterventionItem.xml" />
     <None Remove="Resources\layout\ListeAdapteurGradeItem.xml" />
     <None Remove="Resources\layout\ListeAdapteurPompierItem.xml" />
+    <None Remove="Resources\layout\ListeAdapteurTypeVehiculeItem.xml" />
+    <None Remove="Resources\layout\ListeAdapteurVehiculeItem.xml" />
     <None Remove="Resources\menu\GradeActivityOptionsMenu.axml" />
     <None Remove="Resources\menu\GradeDetailsModifierOptionsMenu.axml" />
     <None Remove="Resources\menu\PompierActivityOptionsMenu.axml" />
     <None Remove="Resources\menu\PompierDetailsOptionsMenu.axml" />
     <None Remove="Resources\menu\PompierModifierOptionsMenu.axml" />
+    <None Remove="Resources\menu\TypeVehiculeActivityOptionsMenu.axml" />
+    <None Remove="Resources\menu\TypeVehiculeDetailsModifierOptionsMenu.axml" />
+    <None Remove="Resources\menu\VehiculeActivityOptionsMenu.axml" />
+    <None Remove="Resources\menu\VehiculeDetailsOptionsMenu.axml" />
+    <None Remove="Resources\menu\VehiculeModifierOptionsMenu.axml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

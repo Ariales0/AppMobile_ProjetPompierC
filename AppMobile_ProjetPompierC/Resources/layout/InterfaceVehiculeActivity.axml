@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <TextView
+        android:text="Liste de(s) véhicules(s) : "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvListeVehicule" />
+    <ListView
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="164.0dp"
+        android:id="@+id/lvVehicule"
+        android:layout_marginBottom="13.5dp"
+        android:layout_marginTop="28.0dp" />
+    <TableLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tlAjoutVehicule">
+        <TableRow
+            android:id="@+id/trVinVehicule"
+            android:layout_height="93.0dp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent">
+            <TextView
+                android:text="VIN :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblVinVehicule"
+                android:layout_marginRight="0.0dp"
+                android:layout_marginLeft="0.0dp"
+                android:layout_width="105.0dp"
+                android:layout_marginBottom="0.0dp"
+                android:layout_marginTop="0.0dp"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_column="1"
+                android:id="@+id/edtVinVehicule"
+                android:layout_height="40.5dp"
+                android:layout_width="202.5dp"
+                android:layout_marginBottom="0.0dp"
+                android:layout_marginTop="0.0dp"
+                android:layout_marginRight="0.0dp"
+                android:inputType="text" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/trMarqueVehicule"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Marque :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblMarqueVehicule"
+                android:layout_marginLeft="0.0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_column="1"
+                android:id="@+id/edtMarqueVehicule"
+                android:layout_height="40.5dp"
+                android:layout_width="202.5dp"
+                android:layout_marginBottom="0.0dp"
+                android:layout_marginTop="0.0dp"
+                android:layout_marginRight="0.0dp"
+                android:inputType="text" />
+
+
+        </TableRow>
+        <TableRow
+            android:id="@+id/trModeleVehicule"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Modele :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblModeleVehicule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_column="1"
+                android:id="@+id/edtModeleVehicule"
+                android:layout_height="40.5dp"
+                android:inputType="text"
+                android:layout_width="match_parent" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/trAnneeVehicule"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Année :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblAnneeVehicule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_column="1"
+                android:id="@+id/edtAnneeVehicule"
+                android:layout_height="40.5dp"
+                android:inputType="text"
+                android:layout_width="match_parent" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/trTypeVehicule"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Type :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblTypeVehicule"
+                android:layout_marginLeft="0.0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/spTypeVehicule"
+                android:layout_width="wrap_content"
+                android:layout_height="33.9dp"/>
+        </TableRow>
+    </TableLayout>
+    <Button
+        android:text="AJOUTER"
+        android:layout_width="144.5dp"
+        android:layout_height="38.0dp"
+        android:id="@+id/btnAjouterVehicule"
+        android:layout_gravity="center"
+        android:layout_marginLeft="0.0dp"
+        android:layout_marginTop="26.0dp"
+        android:layout_marginBottom="0.0dp" />
+</LinearLayout>

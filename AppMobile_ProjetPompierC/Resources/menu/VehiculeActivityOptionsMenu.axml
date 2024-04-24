@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/ViderVehiculeActivity" android:title="Vider la liste"/>
+	<item android:id="@+id/RetourVehiculeActivity" android:title="Retour"/>
+	<item android:id="@+id/QuitterVehiculeActivity" android:title="Quitter"/>
+</menu>
+

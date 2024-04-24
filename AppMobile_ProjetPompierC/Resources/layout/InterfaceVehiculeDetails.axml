@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:p4="http://xamarin.com/mono/android/designer"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TableLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="45dp"
+        android:id="@+id/tlVehiculeDetails">
+        <TableRow
+            android:id="@+id/trVinVehiculeDetails"
+            android:layout_height="93.0dp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent">
+            <TextView
+                android:text="Vin :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblVinVehiculeDetails"
+                android:layout_marginRight="0.0dp"
+                android:layout_marginLeft="0.0dp"
+                android:layout_width="126.0dp"
+                android:layout_marginBottom="0.0dp"
+                android:layout_height="35.0dp" />
+            <TextView
+                android:text="-"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="1"
+                android:id="@+id/tvVinVehiculeDetails"
+                android:layout_marginRight="0.0dp"
+                android:layout_marginLeft="0.0dp"
+                android:layout_width="173.0dp"
+                android:layout_height="35.0dp" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/trMarqueVehiculeDetails"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Marque :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblMarqueVehiculeDetails"
+                android:layout_marginLeft="0.0dp"
+                android:layout_height="35.0dp"
+                android:layout_width="match_parent" />
+            <TextView
+                android:text="-"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="1"
+                android:id="@+id/tvMarqueVehiculeDetails"
+                android:layout_marginRight="0.0dp"
+                android:layout_marginLeft="0.0dp"
+                android:layout_height="35.0dp"
+                android:layout_width="match_parent" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/trModeleVehiculeDetails"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Modèle :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblModeleVehiculeDetails"
+                android:layout_height="35.0dp"
+                android:layout_width="match_parent" />
+            <TextView
+                android:text="-"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="1"
+                android:id="@+id/tvModeleVehiculeDetails"
+                android:layout_marginRight="0.0dp"
+                android:layout_marginLeft="0.0dp"
+                android:layout_height="35.0dp"
+                android:layout_width="match_parent" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/trAnneeVehiculeDetails"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Année :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblAnneeVehiculeDetails"
+                android:layout_height="35.0dp"
+                android:layout_width="match_parent" />
+            <TextView
+                android:text="-"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="1"
+                android:id="@+id/tvAnneeVehiculeDetails"
+                android:layout_marginRight="0.0dp"
+                android:layout_marginLeft="0.0dp"
+                android:layout_height="35.0dp"
+                android:layout_width="match_parent" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/trTypeVehiculeDetails"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Type :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblTypeVehiculeDetails"
+                android:layout_height="35.0dp"
+                android:layout_width="match_parent" />
+            <TextView
+                android:text="-"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="1"
+                android:id="@+id/tvTypeVehiculeDetails"
+                android:layout_marginRight="0.0dp"
+                android:layout_marginLeft="0.0dp"
+                android:layout_height="35.0dp"
+                android:layout_width="match_parent" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>
