@@ -13,7 +13,7 @@ using AppMobile_ProjetPompierC.Adapters;
 namespace ProjetPompier_Mobile.Vues
 {
     /// <summary>
-    /// Classe de type Activité pour la modification d'un Cégep.
+    /// Classe de type Activité pour la modification d'un véhicule.
     /// </summary>
     [Activity(Label = "@string/app_name")]
     public class VehiculeModifierActivity : Activity
@@ -26,96 +26,105 @@ namespace ProjetPompier_Mobile.Vues
         private string paramNomCaserne;
 
         /// <summary>
-        /// Attribut représentant le matricule du pompier.
+        /// Attribut représentant le vin du véhicule.
         /// </summary>
-        private int paramMatriculePompier;
+        private string paramVinVehicule;
 
         /// <summary>
-        /// Liste des grades.
+        /// Liste des type de véhicule.
         /// </summary>
-        private List<GradeDTO> listeGrade;
+        private List<TypeVehiculeDTO> listeTypeVehicule;
 
         /// <summary>
-        /// Adapter pour la liste des grade.
+        /// Adapter pour la liste des types.
         /// </summary>
-        private ListeGradeAdapter adapteurListeGrade;
+        private ListeTypeVehiculeAdapter adapteurListeTypeVehicule;
 
         /// <summary>
-        /// Attribut représentant le pompier en objet PompierDTO.
+        /// Attribut représentant le véhicule en objet VehiculeDTO.
         /// </summary>
-        private PompierDTO lePompier;
+        private VehiculeDTO leVehicule;
 
         /// <summary>
-        /// Attribut représentant le champ d'affichage du matricule du pompier.
+        /// Attribut représentant le champ d'affichage du VIN du véhicule.
         /// </summary>
-        private TextView edtMatriculePompierModifier;
+        private TextView edtVinVehiculeModifier;
 
         /// <summary>
-        /// Liste deroulante qui contient les grades .
+        /// Liste deroulante qui contient les types.
         /// </summary>
-        private Spinner spinnerGradePompier;
+        private Spinner spinnerTypeVehicule;
 
         /// <summary>
-        /// Grade séléctionné dans le spinner .
+        /// Type séléctionné dans le spinner.
         /// </summary>
-        string gradeSelectionne;
+        string typeSelectionne;
 
         /// <summary>
-        /// Attribut représentant le champ d'affichage du nom du pompier.
+        /// Attribut représentant le champ d'affichage de la marque du véhicule.
         /// </summary>
-        private TextView edtNomPompierModifier;
+        private TextView edtMarqueVehiculeModifier;
 
         /// <summary>
-        /// Attribut représentant le champ d'affichage du prenom du pompier.
+        /// Attribut représentant le champ d'affichage du modèle du véhicule.
         /// </summary>
-        private TextView edtPrenomPompierModifier;
+        private TextView edtModeleVehiculeModifier;
 
-        /// <summary>
-        /// Bouton pour ajouter un pompier dans la caserne.
-        /// </summary>
-        private Button btnModifierPompier;
+		// <summary>
+		/// Attribut représentant le champ d'affichage de l'année du véhicule.
+		/// </summary>
+		private TextView edtAnneeVehiculeModifier;
+
+		/// <summary>
+		/// Bouton pour ajouter un véhicule dans la caserne.
+		/// </summary>
+		private Button btnModifierVehicule;
 
         #endregion Proprietes
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.InterfacePompierModifier);
+            SetContentView(Resource.Layout.InterfaceVehiculeModifier);
 
             paramNomCaserne = Intent.GetStringExtra("paramNomCaserne");
-            paramMatriculePompier = Intent.GetIntExtra("paramMatriculePompier", 0);
+            paramVinVehicule = Intent.GetStringExtra("paramVinVehicule");
 
-            edtMatriculePompierModifier = FindViewById<TextView>(Resource.Id.tvMatriculePompierModifier);
-            edtNomPompierModifier = FindViewById<TextView>(Resource.Id.edtNomPompierModifier);
-            edtPrenomPompierModifier = FindViewById<TextView>(Resource.Id.edtPrenomPompierModifier);
+            edtVinVehiculeModifier = FindViewById<TextView>(Resource.Id.tvVinVehiculeModifier);
+            edtMarqueVehiculeModifier = FindViewById<TextView>(Resource.Id.edtMarqueVehiculeModifier); 
+            edtModeleVehiculeModifier = FindViewById<TextView>(Resource.Id.edtModeleVehiculeModifier);
+			edtAnneeVehiculeModifier = FindViewById<TextView>(Resource.Id.edtAnneeVehiculeModifier);
 
-            spinnerGradePompier = FindViewById<Spinner>(Resource.Id.spGradePompierModifier);
+			spinnerTypeVehicule = FindViewById<Spinner>(Resource.Id.spTypeVehiculeModifier);
             
-            spinnerGradePompier.ItemSelected += (sender, e) =>
+            spinnerTypeVehicule.ItemSelected += (sender, e) =>
             {
-                GradeDTO gradeDTOSelecionne = new GradeDTO();
-                gradeDTOSelecionne = listeGrade[e.Position];
-                gradeSelectionne = gradeDTOSelecionne.Description;
-            };
+                TypeVehiculeDTO typeVehiculeDTOSelecionne;
+                typeVehiculeDTOSelecionne = listeTypeVehicule[e.Position];
+                typeSelectionne = typeVehiculeDTOSelecionne.Type;
+				
+			};
 
-            btnModifierPompier = FindViewById<Button>(Resource.Id.btnModifierPompier);
-            btnModifierPompier.Click += async (sender, e) =>
+            btnModifierVehicule = FindViewById<Button>(Resource.Id.btnModifierVehicule);
+            btnModifierVehicule.Click += async (sender, e) =>
             {
-                if ((!string.IsNullOrEmpty(gradeSelectionne)) && (edtNomPompierModifier.Text.Length > 0) && (edtPrenomPompierModifier.Text.Length > 0))
+                // DEMANDER À KEVEN SI ON PEUT MODIFIER LE TYPE D'UN VÉHICULE
+                if ((edtMarqueVehiculeModifier.Text.Length > 0) && (edtModeleVehiculeModifier.Text.Length > 0) && (int.Parse(edtAnneeVehiculeModifier.Text) > 0))
                 {
                     try
                     {
-                        string lePompierModifier = gradeSelectionne + " " + edtNomPompierModifier.Text + " " + edtPrenomPompierModifier.Text;
+                        string leVehiculeModifier = leVehicule.VinVehicule + " " + edtModeleVehiculeModifier.Text + " " + edtAnneeVehiculeModifier.Text;
 
-                        PompierDTO pompierDTO = new PompierDTO
+                        VehiculeDTO vehiculeDTO = new VehiculeDTO
                         {
-                            Matricule = paramMatriculePompier,
-                            Grade = gradeSelectionne,
-                            Nom = edtNomPompierModifier.Text,
-                            Prenom = edtPrenomPompierModifier.Text
+                            VinVehicule = paramVinVehicule,
+                            Type = typeSelectionne,
+                            Marque = edtMarqueVehiculeModifier.Text,
+                            Modele = edtModeleVehiculeModifier.Text,
+                            Annee = int.Parse(edtAnneeVehiculeModifier.Text)
                         };
-                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ModifierPompier?nomCaserne="+paramNomCaserne, pompierDTO);
-                        DialoguesUtils.AfficherToasts(this, lePompierModifier + " est modifié !!!");
+                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Vehicule/ModifierVehicule?nomCaserne="+paramNomCaserne, vehiculeDTO);
+                        DialoguesUtils.AfficherToasts(this, leVehiculeModifier + " est modifié !!!");
                         Finish();
                     }
                     catch (Exception ex)
@@ -142,26 +151,29 @@ namespace ProjetPompier_Mobile.Vues
         }
 
         /// <summary>
-        /// Méthode permettant de rafraichir les informations du Cégep...
+        /// Méthode permettant de rafraichir les informations du véhicule...
         /// </summary>
         private async Task RafraichirInterfaceDonnees()
         {
             try
             {
-                string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ObtenirPompier?nomCaserne=" + paramNomCaserne + " &matriculePompier=" + paramMatriculePompier);
-                lePompier = JsonConvert.DeserializeObject<PompierDTO>(jsonResponse);
-                edtMatriculePompierModifier.Text = lePompier.Matricule.ToString();
-                edtNomPompierModifier.Text = lePompier.Nom;
-                edtPrenomPompierModifier.Text = lePompier.Prenom;
+                string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Vehicule/ObtenirVehicule?nomCaserne=" + paramNomCaserne + " &vinVehicule=" + paramVinVehicule);
+                leVehicule = JsonConvert.DeserializeObject<VehiculeDTO>(jsonResponse);
+                edtVinVehiculeModifier.Text = leVehicule.VinVehicule;
+                edtMarqueVehiculeModifier.Text = leVehicule.Marque;
+                edtModeleVehiculeModifier.Text = leVehicule.Modele;
+                edtAnneeVehiculeModifier.Text = leVehicule.Annee.ToString();
                 
 
-                string jsonResponseGrade = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Grade/ObtenirListeGrade");
-                listeGrade = JsonConvert.DeserializeObject<List<GradeDTO>>(jsonResponseGrade);
-                adapteurListeGrade = new ListeGradeAdapter(this, listeGrade.ToArray());
-                spinnerGradePompier.Adapter = adapteurListeGrade;
-                GradeDTO gradeDTODuPompier = new GradeDTO(lePompier.Grade);
-                int gradeIndex = listeGrade.FindIndex(item => item.Description == lePompier.Grade);
-                spinnerGradePompier.SetSelection(gradeIndex);
+                string jsonResponseGrade = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypeVehicule/ObtenirListeTypeVehicule");
+                listeTypeVehicule = JsonConvert.DeserializeObject<List<TypeVehiculeDTO>>(jsonResponseGrade);
+                adapteurListeTypeVehicule = new ListeTypeVehiculeAdapter(this, listeTypeVehicule.ToArray());
+                spinnerTypeVehicule.Adapter = adapteurListeTypeVehicule;
+                // Pas sur de ce que cette ligne là fait
+                // TypeVehiculeDTO typeVehiculeDTODuVehicule= new TypeVehiculeDTO(leVehicule.Type, );
+                // À réparer quand on va être prêt :D
+                //int typeVehiculeIndex = listeTypeVehicule.FindIndex(item => item.Description == lePompier.Grade);
+                //spinnerGradePompier.SetSelection(typeVehiculeIndex);
 
             }
             catch (Exception)
@@ -175,7 +187,7 @@ namespace ProjetPompier_Mobile.Vues
         /// <returns>Retourne True si l'optionMenu est bien créé.</returns>
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            MenuInflater.Inflate(Resource.Menu.PompierModifierOptionsMenu, menu);
+            MenuInflater.Inflate(Resource.Menu.VehiculeModifierOptionsMenu, menu);
             return base.OnCreateOptionsMenu(menu);
         }
 
@@ -186,11 +198,11 @@ namespace ProjetPompier_Mobile.Vues
         {
             switch (item.ItemId)
             {
-                case Resource.Id.RetourPompierModifier:
+                case Resource.Id.RetourVehiculeModifier:
                     Finish();
                     break;
 
-                case Resource.Id.QuitterPompierModifier:
+                case Resource.Id.QuitterVehiculeModifier:
                     FinishAffinity();
                     break;
             }

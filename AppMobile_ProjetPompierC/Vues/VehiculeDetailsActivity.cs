@@ -26,37 +26,42 @@ namespace AppMobile_ProjetPompierC.Vues
         private string paramNomCaserne;
 
         /// <summary>
-        /// Attribut représentant le matricule du pompier.
+        /// Attribut représentant le VIN du véhicule.
         /// </summary>
-        private int paramMatriculePompier;
+        private string paramVinVehicule;
 
         /// <summary>
-        /// Attribut représentant le pompier en objet PompierDTO.
+        /// Attribut représentant le véhicule en objet VehiculeDTO.
         /// </summary>
-        private PompierDTO lePompier;
+        private VehiculeDTO leVehicule;
 
         /// <summary>
-        /// Attribut représentant le champ d'affichage du matricule du pompier.
+        /// Attribut représentant le champ d'affichage du VIN du véhicule.
         /// </summary>
-        private TextView lblMatriculePompierAfficher;
+        private TextView lblVinVehiculeAfficher;
 
         /// <summary>
-        /// Attribut représentant le champ d'affichage du grade du pompier.
+        /// Attribut représentant le champ d'affichage du type du véhicule.
         /// </summary>
-        private TextView lblGradePompierAfficher;
+        private TextView lblTypeVehiculeAfficher;
 
         /// <summary>
-        /// Attribut représentant le champ d'affichage du nom du pompier.
+        /// Attribut représentant le champ d'affichage de la marque du véhicule.
         /// </summary>
-        private TextView lblNomPompierAfficher;
+        private TextView lblMarqueVehiculeAfficher;
 
-        /// <summary>
-        /// Attribut représentant le champ d'affichage du prenom du pompier.
-        /// </summary>
-        private TextView lblPrenomPompierAfficher;
+		/// <summary>
+		/// Attribut représentant le champ d'affichage de l'année du véhicule.
+		/// </summary>
+		private TextView lblAnneeVehiculeAfficher;
+
+		/// <summary>
+		/// Attribut représentant le champ d'affichage du modèle du véhicule.
+		/// </summary>
+		private TextView lblModeleVehiculeAfficher;
 
         #endregion Proprietes
-        #region MethodesPompierActivity
+        #region MethodesVehiculeActivity
 
         /// <summary>
         /// Méthode de service appelée lors de la création de l'activité.
@@ -65,15 +70,16 @@ namespace AppMobile_ProjetPompierC.Vues
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.InterfacePompierDetails);
+            SetContentView(Resource.Layout.InterfaceVehiculeDetails);
 
-            lblMatriculePompierAfficher = FindViewById<TextView>(Resource.Id.tvMatriculePompierDetails);
-            lblGradePompierAfficher = FindViewById<TextView>(Resource.Id.tvGradePompierDetails);
-            lblNomPompierAfficher = FindViewById<TextView>(Resource.Id.tvNomPompierDetails);
-            lblPrenomPompierAfficher = FindViewById<TextView>(Resource.Id.tvPrenomPompierDetails);
+            lblVinVehiculeAfficher = FindViewById<TextView>(Resource.Id.tvVinVehiculeDetails);
+            lblTypeVehiculeAfficher = FindViewById<TextView>(Resource.Id.tvTypeVehiculeDetails);
+            lblMarqueVehiculeAfficher = FindViewById<TextView>(Resource.Id.tvMarqueVehiculeDetails);
+            lblModeleVehiculeAfficher = FindViewById<TextView>(Resource.Id.tvModeleVehiculeDetails);
+            lblAnneeVehiculeAfficher = FindViewById<TextView>(Resource.Id.tvAnneeVehiculeDetails);
 
             paramNomCaserne = Intent.GetStringExtra("paramNomCaserne");
-            paramMatriculePompier = Intent.GetIntExtra("paramMatriculePompier",0);
+            paramVinVehicule = Intent.GetStringExtra("paramVinVehicule");
         }
 
         /// <summary>
@@ -93,12 +99,13 @@ namespace AppMobile_ProjetPompierC.Vues
         {
             try
             {
-                string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ObtenirPompier?nomCaserne=" + paramNomCaserne +" &matriculePompier=" + paramMatriculePompier);
-                lePompier = JsonConvert.DeserializeObject<PompierDTO>(jsonResponse);
-                lblMatriculePompierAfficher.Text = lePompier.Matricule.ToString();
-                lblGradePompierAfficher.Text = lePompier.Grade;
-                lblNomPompierAfficher.Text = lePompier.Nom;
-                lblPrenomPompierAfficher.Text = lePompier.Prenom;
+                string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Vehicule/ObtenirVehicule?nomCaserne=" + paramNomCaserne +" &VinVehicule=" + paramVinVehicule);
+                leVehicule = JsonConvert.DeserializeObject<VehiculeDTO>(jsonResponse);
+                lblVinVehiculeAfficher.Text = leVehicule.VinVehicule;
+                lblMarqueVehiculeAfficher.Text = leVehicule.Marque;
+                lblTypeVehiculeAfficher.Text = leVehicule.Type;
+                lblModeleVehiculeAfficher.Text = leVehicule.Modele;
+                lblAnneeVehiculeAfficher.Text = leVehicule.Annee.ToString();
             }
             catch (Exception)
             {
@@ -112,7 +119,7 @@ namespace AppMobile_ProjetPompierC.Vues
         /// <returns>Retourne True si l'optionMenu est bien créé.</returns>
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            MenuInflater.Inflate(Resource.Menu.PompierDetailsOptionsMenu, menu);
+            MenuInflater.Inflate(Resource.Menu.VehiculeDetailsOptionsMenu, menu);
             return base.OnCreateOptionsMenu(menu);
         }
 
@@ -123,10 +130,10 @@ namespace AppMobile_ProjetPompierC.Vues
         {
             switch (item.ItemId)
             {
-                case Resource.Id.ModifierPompierDetails:
-                    Intent activiteModifier = new Intent(this, typeof(PompierModifierActivity));
+                case Resource.Id.ModifierVehiculeDetails:
+                    Intent activiteModifier = new Intent(this, typeof(VehiculeModifierActivity));
                     activiteModifier.PutExtra("paramNomCaserne", paramNomCaserne);
-                    activiteModifier.PutExtra("paramMatriculePompier", paramMatriculePompier);
+                    activiteModifier.PutExtra("paramVinVehicule", paramVinVehicule);
                     StartActivity(activiteModifier);
                     break;
 
@@ -138,12 +145,12 @@ namespace AppMobile_ProjetPompierC.Vues
                         builder.SetPositiveButton("Non", (send, args) => { });
                         builder.SetNegativeButton("Oui", async (send, args) =>
                         {
-                            await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/SupprimerPompier?matriculePompier=" + paramMatriculePompier + "&nomCaserne=" + paramNomCaserne, null);
+                            await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Vehicule/SupprimerVehicule?vinVehicule=" + paramVinVehicule+ "&nomCaserne=" + paramNomCaserne, null);
                             Finish();
                         });
                         AlertDialog dialog = builder.Create();
                         dialog.SetTitle("Suppression");
-                        dialog.SetMessage("Voulez-vous vraiment supprimer le pompier " + lePompier.Nom + " " + lePompier.Prenom + "?");
+                        dialog.SetMessage("Voulez-vous vraiment supprimer le véhicule " + leVehicule.VinVehicule +  " ?");
                         dialog.Window.SetGravity(GravityFlags.Bottom);
                         dialog.Show();
                     }
@@ -153,11 +160,11 @@ namespace AppMobile_ProjetPompierC.Vues
                     }
                     break;
 
-                case Resource.Id.RetourPompierDetails:
+                case Resource.Id.RetourVehiculeDetails:
                     Finish();
                     break;
 
-                case Resource.Id.QuitterPompierDetails:
+                case Resource.Id.QuitterVehiculeDetails:
                     FinishAffinity();
                     break;
             }
@@ -166,5 +173,5 @@ namespace AppMobile_ProjetPompierC.Vues
         
     }
     #endregion Menu
-    #endregion MethodesPompierActivity
+    #endregion MethodesVehiculeActivity
 }

@@ -116,7 +116,7 @@
 		android:text="MODIFIER"
 		android:layout_width="144.5dp"
 		android:layout_height="38.0dp"
-		android:id="@+id/btnModifierPompier"
+		android:id="@+id/btnModifierVehicule"
         android:layout_gravity="center"
 		android:layout_marginLeft="0.0dp"
 		android:layout_marginTop="26.0dp"
