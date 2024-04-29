@@ -28,7 +28,7 @@ public class VehiculeActivity : Activity
     /// <summary>
     /// Liste des types de véhicule.
     /// </summary>
-    private List<TypeVehiculeDTO> listeTypeVehicule;
+    private List<TypesVehiculeDTO> listeTypesVehicule;
 
     /// <summary>
     /// Adapter pour la liste des véhicule.
@@ -54,6 +54,11 @@ public class VehiculeActivity : Activity
     /// Typeséléctionné dans le spinner .
     /// </summary>
     string typeSelectionne;
+
+    /// <summary>
+    /// Code sélectionné dans le spinner.
+    /// </summary>
+    int codeSelectionne;
 
     /// <summary>
     /// Attribut représentant le champ d'édition du modèle du véhicule.
@@ -89,9 +94,9 @@ public class VehiculeActivity : Activity
     /// </summary>
     /// <param name="savedInstanceState">État de l'activité.</param>
     protected override void OnCreate(Bundle savedInstanceState)
-    {
+        {
         base.OnCreate(savedInstanceState);
-        SetContentView(Resource.Layout.InterfacePompierActivity);
+        SetContentView(Resource.Layout.InterfaceVehiculeActivity);
 
         edtVinVehicule = FindViewById<EditText>(Resource.Id.edtVinVehicule);
         
@@ -101,13 +106,17 @@ public class VehiculeActivity : Activity
 
 		paramNomCaserne = Intent.GetStringExtra("paramNomCaserne");
 
+
+        
         spinnerTypeVehicule = FindViewById<Spinner>(Resource.Id.spTypeVehicule);
         spinnerTypeVehicule.ItemSelected += (sender, e) =>
         {
-            VehiculeDTO vehiculeDTOSelecionne = new VehiculeDTO();
-            vehiculeDTOSelecionne = listeVehicule[e.Position];
-            typeSelectionne = vehiculeDTOSelecionne.Type;
+            TypesVehiculeDTO typeVehiculeDTOSelecionne = new TypesVehiculeDTO();
+            typeVehiculeDTOSelecionne = listeTypesVehicule[e.Position];
+            typeSelectionne = typeVehiculeDTOSelecionne.Type;
+            codeSelectionne = typeVehiculeDTOSelecionne.Code;
         };
+        
 
         listViewVehicule = FindViewById<ListView>(Resource.Id.lvVehicule);
         listViewVehicule.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
@@ -115,7 +124,7 @@ public class VehiculeActivity : Activity
             Intent activiteVehiculeDetails = new Intent(this, typeof(VehiculeDetailsActivity));
             //On initialise les paramètres avant de lancer la nouvelle activité.
             activiteVehiculeDetails.PutExtra("paramNomCaserne", paramNomCaserne);
-            activiteVehiculeDetails.PutExtra("paramVinVehicule", listeVehicule[e.Position].VinVehicule);
+            activiteVehiculeDetails.PutExtra("paramVinVehicule", listeVehicule[e.Position].Vin);
             //On démarre la nouvelle activité.
             StartActivity(activiteVehiculeDetails);
         };
@@ -129,13 +138,16 @@ public class VehiculeActivity : Activity
                 {
                     string leVehicule = edtVinVehicule.Text;
 
+                    
+
                     VehiculeDTO vehiculeDTO = new VehiculeDTO
                     {
-                        VinVehicule = edtVinVehicule.Text,
+                        Vin= edtVinVehicule.Text,
                         Marque = edtMarqueVehicule.Text,
                         Modele = edtModeleVehicule.Text,
                         Annee = anneeVehicule,
-                        Type = typeSelectionne
+                        Code = codeSelectionne
+                        
                     };
 
                     await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Vehicule/AjouterVehicule?nomCaserne=" + paramNomCaserne, vehiculeDTO);
@@ -178,9 +190,9 @@ public class VehiculeActivity : Activity
             adapteurListeVehicule = new ListeVehiculeAdapter(this, listeVehicule.ToArray()); 
             listViewVehicule.Adapter = adapteurListeVehicule;
 
-            string jsonResponseType = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypeVehicule/ObtenirListeTypeVehicule");
-            listeTypeVehicule = JsonConvert.DeserializeObject<List<TypeVehiculeDTO>>(jsonResponseType);
-            adapteurListeTypeVehicule = new ListeTypeVehiculeAdapter(this, listeTypeVehicule.ToArray());
+            string jsonResponseType = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypesVehicule/ObtenirListeTypesVehicule");      
+            listeTypesVehicule = JsonConvert.DeserializeObject<List<TypesVehiculeDTO>>(jsonResponseType);
+            adapteurListeTypeVehicule = new ListeTypeVehiculeAdapter(this, listeTypesVehicule.ToArray());
             spinnerTypeVehicule.Adapter = adapteurListeTypeVehicule;
 
             edtMarqueVehicule.Text = edtVinVehicule.Text = edtModeleVehicule.Text =  edtAnneeVehicule.Text = string.Empty;
@@ -196,7 +208,7 @@ public class VehiculeActivity : Activity
     /// <returns>Retourne True si l'optionMenu est bien créé.</returns>
     public override bool OnCreateOptionsMenu(IMenu menu)
     {
-        MenuInflater.Inflate(Resource.Menu.PompierActivityOptionsMenu, menu);
+        MenuInflater.Inflate(Resource.Menu.VehiculeActivityOptionsMenu, menu);
         return base.OnCreateOptionsMenu(menu);
     }
 
@@ -207,7 +219,7 @@ public class VehiculeActivity : Activity
     {
         switch (item.ItemId)
         {
-            case Resource.Id.ViderPompierActivity:
+            case Resource.Id.ViderVehiculeActivity:
                 
                 try
                 {
@@ -215,7 +227,7 @@ public class VehiculeActivity : Activity
                     builder.SetPositiveButton("Non", (send, args) => { });
                     builder.SetNegativeButton("Oui", async (send, args) =>
                     {
-                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Vehicule/ViderListeVehicule?nomCaserne=" + paramNomCaserne, null);
+                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Vehicule/ViderListeVehicules?nomCaserne=" + paramNomCaserne, null);
                         await RafraichirInterfaceDonnees();
                     });
                     AlertDialog dialog = builder.Create();
@@ -231,11 +243,11 @@ public class VehiculeActivity : Activity
                 }
                 break;
 
-            case Resource.Id.RetourPompierActivity:
+            case Resource.Id.RetourVehiculeActivity:
                 Finish();
                 break;
 
-            case Resource.Id.QuitterPompierActivity:
+            case Resource.Id.QuitterVehiculeActivity:
                 FinishAffinity();
                 break;
         }

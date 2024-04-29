@@ -161,6 +161,12 @@ namespace AppMobile_ProjetPompierC.Vues
                     StartActivity(activitePompier);
                     break;
 
+                case Resource.Id.Vehicule:
+                    Intent activiteVehicule = new Intent(this, typeof(VehiculeActivity));
+					activiteVehicule.PutExtra("paramNomCaserne", laCaserne.Nom);
+					StartActivity(activiteVehicule);
+					break;
+
                 case Resource.Id.Retour:
                     Finish();
                     break;

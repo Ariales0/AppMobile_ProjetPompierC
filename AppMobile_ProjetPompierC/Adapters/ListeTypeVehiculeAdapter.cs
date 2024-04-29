@@ -9,7 +9,7 @@ namespace AppMobile_ProjetPompierC.Adapters
     /// <summary>
     /// Classe représentant un adapteur pour une liste de type(s) de véhicule(s).
     /// </summary>
-    internal class ListeTypeVehiculeAdapter : BaseAdapter<TypeVehiculeDTO>
+    internal class ListeTypeVehiculeAdapter : BaseAdapter<TypesVehiculeDTO>
     {
         /// <summary>
         /// Attribut représetant le contexte.
@@ -19,14 +19,14 @@ namespace AppMobile_ProjetPompierC.Adapters
         /// <summary>
         /// Attribut représentant la liste des types.
         /// </summary>
-		private TypeVehiculeDTO[] listeTypeVehicule;
+		private TypesVehiculeDTO[] listeTypeVehicule;
 
         /// <summary>
         /// Méthode réécrite de la classe BaseAdapter permettant d'accéder à un élément de la liste des types selon un index.
         /// </summary>
         /// <param name="index">Index du grade.</param>
         /// <returns>Retourne l'objet TypeVehiculeDTO correspondant à sa position dans la liste selon l'index passé en paramètre.</returns>
-        public override TypeVehiculeDTO this[int index]
+        public override TypesVehiculeDTO this[int index]
         {
             get { return listeTypeVehicule[index]; }
         }
@@ -45,7 +45,7 @@ namespace AppMobile_ProjetPompierC.Adapters
         /// </summary>
         /// <param name="unContext">Contexte</param>
         /// <param name="uneListeTypeVehicule">Liste des types</param>
-        public ListeTypeVehiculeAdapter(Activity unContext, TypeVehiculeDTO[] uneListeTypeVehicule)
+        public ListeTypeVehiculeAdapter(Activity unContext, TypesVehiculeDTO[] uneListeTypeVehicule)
         {
             context = unContext;
             listeTypeVehicule = uneListeTypeVehicule;

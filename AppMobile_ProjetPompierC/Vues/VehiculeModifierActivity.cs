@@ -33,7 +33,7 @@ namespace ProjetPompier_Mobile.Vues
         /// <summary>
         /// Liste des type de véhicule.
         /// </summary>
-        private List<TypeVehiculeDTO> listeTypeVehicule;
+        private List<TypesVehiculeDTO> listeTypeVehicule;
 
         /// <summary>
         /// Adapter pour la liste des types.
@@ -59,6 +59,11 @@ namespace ProjetPompier_Mobile.Vues
         /// Type séléctionné dans le spinner.
         /// </summary>
         string typeSelectionne;
+
+        /// <summary>
+        /// Code sélectionné dans le spinner
+        /// </summary>
+        int codeSelectionne;
 
         /// <summary>
         /// Attribut représentant le champ d'affichage de la marque du véhicule.
@@ -99,9 +104,10 @@ namespace ProjetPompier_Mobile.Vues
             
             spinnerTypeVehicule.ItemSelected += (sender, e) =>
             {
-                TypeVehiculeDTO typeVehiculeDTOSelecionne;
+                TypesVehiculeDTO typeVehiculeDTOSelecionne;
                 typeVehiculeDTOSelecionne = listeTypeVehicule[e.Position];
                 typeSelectionne = typeVehiculeDTOSelecionne.Type;
+                codeSelectionne = typeVehiculeDTOSelecionne.Code; 
 				
 			};
 
@@ -113,12 +119,12 @@ namespace ProjetPompier_Mobile.Vues
                 {
                     try
                     {
-                        string leVehiculeModifier = leVehicule.VinVehicule + " " + edtModeleVehiculeModifier.Text + " " + edtAnneeVehiculeModifier.Text;
+                        string leVehiculeModifier = leVehicule.Vin + " " + edtModeleVehiculeModifier.Text + " " + edtAnneeVehiculeModifier.Text;
 
                         VehiculeDTO vehiculeDTO = new VehiculeDTO
                         {
-                            VinVehicule = paramVinVehicule,
-                            Type = typeSelectionne,
+                            Vin = paramVinVehicule,
+                            Code = codeSelectionne,
                             Marque = edtMarqueVehiculeModifier.Text,
                             Modele = edtModeleVehiculeModifier.Text,
                             Annee = int.Parse(edtAnneeVehiculeModifier.Text)
@@ -159,24 +165,24 @@ namespace ProjetPompier_Mobile.Vues
             {
                 string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Vehicule/ObtenirVehicule?nomCaserne=" + paramNomCaserne + " &vinVehicule=" + paramVinVehicule);
                 leVehicule = JsonConvert.DeserializeObject<VehiculeDTO>(jsonResponse);
-                edtVinVehiculeModifier.Text = leVehicule.VinVehicule;
+                edtVinVehiculeModifier.Text = leVehicule.Vin;
                 edtMarqueVehiculeModifier.Text = leVehicule.Marque;
                 edtModeleVehiculeModifier.Text = leVehicule.Modele;
                 edtAnneeVehiculeModifier.Text = leVehicule.Annee.ToString();
                 
 
-                string jsonResponseGrade = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypeVehicule/ObtenirListeTypeVehicule");
-                listeTypeVehicule = JsonConvert.DeserializeObject<List<TypeVehiculeDTO>>(jsonResponseGrade);
+                string jsonResponseGrade = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypesVehicule/ObtenirListeTypesVehicule");
+                listeTypeVehicule = JsonConvert.DeserializeObject<List<TypesVehiculeDTO>>(jsonResponseGrade);
                 adapteurListeTypeVehicule = new ListeTypeVehiculeAdapter(this, listeTypeVehicule.ToArray());
                 spinnerTypeVehicule.Adapter = adapteurListeTypeVehicule;
                 // Pas sur de ce que cette ligne là fait
-                // TypeVehiculeDTO typeVehiculeDTODuVehicule= new TypeVehiculeDTO(leVehicule.Type, );
+                //TypeVehiculeDTO typeVehiculeDTODuVehicule= new TypeVehiculeDTO(leVehicule.Type, );
                 // À réparer quand on va être prêt :D
-                //int typeVehiculeIndex = listeTypeVehicule.FindIndex(item => item.Description == lePompier.Grade);
-                //spinnerGradePompier.SetSelection(typeVehiculeIndex);
+                int typeVehiculeIndex = listeTypeVehicule.FindIndex(item => item.Code == leVehicule.Code);
+                spinnerTypeVehicule.SetSelection(typeVehiculeIndex);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Finish();
             }

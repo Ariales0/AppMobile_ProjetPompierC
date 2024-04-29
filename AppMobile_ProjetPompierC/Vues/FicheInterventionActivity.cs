@@ -67,7 +67,8 @@ namespace AppMobile_ProjetPompierC.Vues
                         // Créer une nouvelle fiche d'intervention uniquement si les champs ne sont pas vides
                         FicheInterventionDTO fiche = new FicheInterventionDTO()
                         {
-                            DateTemps = DateTime.Now.ToString(),
+                            DateDebut = DateTime.Now.ToString(),
+                            DateFin = null,
                             Adresse = edtAdresse.Text,
                             TypeIntervention = edtTypeIntervention.Text,
                             Resume = edtResume.Text,

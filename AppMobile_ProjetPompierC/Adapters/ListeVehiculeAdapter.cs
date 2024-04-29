@@ -72,7 +72,7 @@ namespace AppMobile_ProjetPompierC.Adapters
         {
             View view = (convertView ?? context.LayoutInflater.Inflate(Resource.Layout.ListeAdapteurVehiculeItem, parent, false)) as LinearLayout;
 
-            view.FindViewById<TextView>(Resource.Id.tvVinVehicule).Text = listeVehicule[position].VinVehicule +" " + listeVehicule[position].Modele +" "+ listeVehicule[position].Annee;
+            view.FindViewById<TextView>(Resource.Id.tvVinVehicule).Text = listeVehicule[position].Vin +" " + listeVehicule[position].Modele +" "+ listeVehicule[position].Annee;
 
             return view;
         }

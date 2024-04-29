@@ -17,7 +17,7 @@ public class TypeVehiculeActivity : Activity
     /// <summary>
     /// Liste des types.
     /// </summary>
-    private List<TypeVehiculeDTO> listeTypeVehicule;
+    private List<TypesVehiculeDTO> listeTypeVehicule;
 
     /// <summary>
     /// Adapter pour la liste des types.
@@ -74,7 +74,7 @@ public class TypeVehiculeActivity : Activity
             //On initialise les paramètres avant de lancer la nouvelle activité.
             activiteTypeVehiculeDetailsModifier.PutExtra("paramTypeTypeVehicule", listeTypeVehicule[e.Position].Type);
 			activiteTypeVehiculeDetailsModifier.PutExtra("paramCodeTypeVehicule", listeTypeVehicule[e.Position].Code);
-			activiteTypeVehiculeDetailsModifier.PutExtra("paramNbPersonneTypeVehicule", listeTypeVehicule[e.Position].NombrePersonne);
+			activiteTypeVehiculeDetailsModifier.PutExtra("paramNbPersonneTypeVehicule", listeTypeVehicule[e.Position].Personnes);
 			//On démarre la nouvelle activité.
 			StartActivity(activiteTypeVehiculeDetailsModifier);
         };
@@ -82,20 +82,20 @@ public class TypeVehiculeActivity : Activity
         btnAjouterTypeVehicule = FindViewById<Button>(Resource.Id.btnAjouterTypeVehicule);
         btnAjouterTypeVehicule.Click += async (sender, e) =>
         {
-            if (edtTypeTypeVehicule.Text.Length > 0 && edtCodeTypeVehicule.Text.Length > 0 && int.Parse(edtNbPersonneTypeVehicule.Text) > 0)
+            if (edtTypeTypeVehicule.Text.Length > 0 && int.Parse(edtCodeTypeVehicule.Text) > 0 && int.Parse(edtNbPersonneTypeVehicule.Text) > 0)
             {
                 try
                 {
                     string typeTypeVehicule = edtTypeTypeVehicule.Text;
-					string codeTypeVehicule = edtCodeTypeVehicule.Text;
+					int codeTypeVehicule = int.Parse(edtCodeTypeVehicule.Text);
 					int nbPersonneTypeVehicule = int.Parse(edtNbPersonneTypeVehicule.Text);
 
-					TypeVehiculeDTO typeDTO = new TypeVehiculeDTO(typeTypeVehicule, codeTypeVehicule, nbPersonneTypeVehicule);
+					TypesVehiculeDTO typeDTO = new TypesVehiculeDTO(typeTypeVehicule, codeTypeVehicule, nbPersonneTypeVehicule);
 
-                    /* Enlever le commentaire quand l'API sera prêt :)
-                    await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypeVehicule/AjouterTypeVehicule", typeDTO);
+                    // Enlever le commentaire quands l'API sera prêt :)
+                    await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypesVehicule/AjouterTypesVehicule", typeDTO);
                     DialoguesUtils.AfficherToasts(this, "Le type " + typeTypeVehicule+ " est ajouté");
-                    */
+                    
                     await RafraichirInterfaceDonnees();
                 }
                 catch (Exception ex)
@@ -127,11 +127,11 @@ public class TypeVehiculeActivity : Activity
     private async Task RafraichirInterfaceDonnees()
     {
 
-        /* Enlever le commentaire quand l'API sera prêt :)
+        // Enlever le commentaire quand l'API sera prêt :)
         try
         {
-            string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypeVehicule/ObtenirListeTypeVehicule");
-            listeTypeVehicule = JsonConvert.DeserializeObject<List<TypeVehiculeDTO>>(jsonResponse);
+            string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypesVehicule/ObtenirListeTypesVehicule");
+            listeTypeVehicule = JsonConvert.DeserializeObject<List<TypesVehiculeDTO>>(jsonResponse);
 
             
 			adapteurListeTypeVehicule = new ListeTypeVehiculeAdapter(this, listeTypeVehicule.ToArray());
@@ -144,7 +144,7 @@ public class TypeVehiculeActivity : Activity
         {
             DialoguesUtils.AfficherMessageOK(this, "Erreur", ex.Message);
         }
-        */
+        
     }
 
     /// <summary>Méthode de service permettant d'initialiser le menu de l'activité.</summary>
@@ -171,7 +171,7 @@ public class TypeVehiculeActivity : Activity
                     builder.SetPositiveButton("Non", (send, args) => { });
                     builder.SetNegativeButton("Oui", async (send, args) =>
                     {
-                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypeVehicule/ViderListetypeVehicule", null);
+                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypesVehicule/ViderListeTypesVehicules", null);
                         await RafraichirInterfaceDonnees();
                     });
                     AlertDialog dialog = builder.Create();

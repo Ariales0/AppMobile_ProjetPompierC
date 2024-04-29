@@ -21,12 +21,12 @@ public class TypeVehiculeDetailsModifierActivity : Activity
 	/// <summary>
 	/// Code du type envoye par l'activite precedent.
 	/// </summary>
-	private string paramCodeTypeVehicule;
+	private int paramCodeTypeVehicule;
 
 	/// <summary>
 	/// Nombre de personne du type envoye par l'activite precedent.
 	/// </summary>
-	private string paramNbPersonneTypeVehicule;
+	private int paramNbPersonneTypeVehicule;
 
 	/// <summary>
 	/// Attribut représentant le pompier en objet PompierDTO.
@@ -95,8 +95,8 @@ public class TypeVehiculeDetailsModifierActivity : Activity
 		edtNbPersonneTypeVehicule = FindViewById<EditText>(Resource.Id.tvNbPersonneTypeVehiculeModifier);
 
 		paramTypeTypeVehicule = Intent.GetStringExtra("paramTypeTypeVehicule");
-		paramCodeTypeVehicule = Intent.GetStringExtra("paramCodeTypeVehicule");
-		paramNbPersonneTypeVehicule = Intent.GetStringExtra("paramNbPersonneTypeVehicule");
+		paramCodeTypeVehicule = Intent.GetIntExtra("paramCodeTypeVehicule", 0);
+		paramNbPersonneTypeVehicule = Intent.GetIntExtra("paramNbPersonneTypeVehicule", 0);
 
 		btnModifierTypeVehicule = FindViewById<Button>(Resource.Id.btnModifierTypeVehicule);
         btnModifierTypeVehicule.Click += async (sender, e) =>
@@ -106,15 +106,15 @@ public class TypeVehiculeDetailsModifierActivity : Activity
                 try
                 {
                     string typeTypeVehicule = edtTypeTypeVehicule.Text;
-					string codeTypeVehicule = edtCodeTypeVehicule.Text;
+					int codeTypeVehicule = int.Parse(edtCodeTypeVehicule.Text);
 					int nbPersonneTypeVehicule = int.Parse(edtNbPersonneTypeVehicule.Text);
 
-					TypeVehiculeDTO typeDTO = new TypeVehiculeDTO(typeTypeVehicule, codeTypeVehicule, nbPersonneTypeVehicule);
-                    /* Enlever les commentaires quand l'API sera prêt :)
-                    await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypeVehicule/ModifierTypeVehicule", typeDTO);
+					TypesVehiculeDTO typeDTO = new TypesVehiculeDTO(typeTypeVehicule, codeTypeVehicule, nbPersonneTypeVehicule);
+                    
+                    await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypesVehicule/ModifierTypesVehicule", typeDTO);
                     DialoguesUtils.AfficherToasts(this,"Le type "+ typeTypeVehicule + " est modifié !!!");
                     Finish();
-                    */
+
                 }
                 catch (Exception ex)
                 {
@@ -160,8 +160,11 @@ public class TypeVehiculeDetailsModifierActivity : Activity
             //Ajouter l'obtention du type par l'API
             lblTypeTypeVehicule.Text = paramTypeTypeVehicule;
             edtTypeTypeVehicule.Text = paramTypeTypeVehicule;
-			lblNbPersonneTypeVehicule.Text = paramNbPersonneTypeVehicule;
-            edtNbPersonneTypeVehicule.Text = paramNbPersonneTypeVehicule;
+			lblNbPersonneTypeVehicule.Text = paramNbPersonneTypeVehicule.ToString();
+            edtNbPersonneTypeVehicule.Text = paramNbPersonneTypeVehicule.ToString();
+            lblCodeTypeVehicule.Text = paramCodeTypeVehicule.ToString();
+			edtCodeTypeVehicule.Text = paramCodeTypeVehicule.ToString();
+
 
 			btnModifierTypeVehicule.Enabled = false;
             edtTypeTypeVehicule.Enabled = false;
@@ -198,7 +201,7 @@ public class TypeVehiculeDetailsModifierActivity : Activity
                     builder.SetPositiveButton("Non", (send, args) => { });
                     builder.SetNegativeButton("Oui", async (send, args) =>
                     {
-                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypeVehicule/SupprimerTypeVehicule?code=" + paramCodeTypeVehicule, null);
+                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypesVehicule/SupprimerTypesVehicule?code=" + paramCodeTypeVehicule, null);
                         Finish();
                     });
                     AlertDialog dialog = builder.Create();

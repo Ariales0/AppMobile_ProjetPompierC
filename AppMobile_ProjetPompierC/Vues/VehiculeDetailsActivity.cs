@@ -101,9 +101,9 @@ namespace AppMobile_ProjetPompierC.Vues
             {
                 string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Vehicule/ObtenirVehicule?nomCaserne=" + paramNomCaserne +" &VinVehicule=" + paramVinVehicule);
                 leVehicule = JsonConvert.DeserializeObject<VehiculeDTO>(jsonResponse);
-                lblVinVehiculeAfficher.Text = leVehicule.VinVehicule;
+                lblVinVehiculeAfficher.Text = leVehicule.Vin;
                 lblMarqueVehiculeAfficher.Text = leVehicule.Marque;
-                lblTypeVehiculeAfficher.Text = leVehicule.Type;
+                lblTypeVehiculeAfficher.Text = leVehicule.Code.ToString();
                 lblModeleVehiculeAfficher.Text = leVehicule.Modele;
                 lblAnneeVehiculeAfficher.Text = leVehicule.Annee.ToString();
             }
@@ -138,19 +138,19 @@ namespace AppMobile_ProjetPompierC.Vues
                     break;
 
 
-                case Resource.Id.SupprimerPompierDetails:
+                case Resource.Id.SupprimerVehiculeDetails:
                     try
                     {
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
                         builder.SetPositiveButton("Non", (send, args) => { });
                         builder.SetNegativeButton("Oui", async (send, args) =>
                         {
-                            await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Vehicule/SupprimerVehicule?vinVehicule=" + paramVinVehicule+ "&nomCaserne=" + paramNomCaserne, null);
+                            await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Vehicule/SupprimerVehicule?nomCaserne=" + paramNomCaserne+ "&vinVehicule=" + paramVinVehicule, null);
                             Finish();
                         });
                         AlertDialog dialog = builder.Create();
                         dialog.SetTitle("Suppression");
-                        dialog.SetMessage("Voulez-vous vraiment supprimer le véhicule " + leVehicule.VinVehicule +  " ?");
+                        dialog.SetMessage("Voulez-vous vraiment supprimer le véhicule " + leVehicule.Vin +  " ?");
                         dialog.Window.SetGravity(GravityFlags.Bottom);
                         dialog.Show();
                     }
@@ -160,7 +160,7 @@ namespace AppMobile_ProjetPompierC.Vues
                     }
                     break;
 
-                case Resource.Id.RetourVehiculeDetails:
+                case Resource.Id.RetourVehiculeDetails: 
                     Finish();
                     break;
 

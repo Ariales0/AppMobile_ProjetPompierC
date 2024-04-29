@@ -188,6 +188,12 @@ namespace AppMobile_ProjetPompierC.Vues
                     }
                     break;
 
+                case Resource.Id.TypeVehicule:
+					Intent activiteTypeVehicule = new Intent(this, typeof(TypeVehiculeActivity));
+					//On démarre la nouvelle activité.
+					StartActivity(activiteTypeVehicule);
+					break;
+
                 case Resource.Id.Grade:
                     Intent activiteGrade = new Intent(this, typeof(GradeActivity));
                     //On démarre la nouvelle activité.

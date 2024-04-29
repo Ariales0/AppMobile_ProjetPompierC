@@ -7,7 +7,7 @@ namespace AppMobile_ProjetPompierC.DTO
     /// <summary>
     /// Classe représentant le DTO d'un type de véhicule.
     /// </summary>
-    public class TypeVehiculeDTO
+    public class TypesVehiculeDTO
     {
         #region Proprietes
 
@@ -18,11 +18,11 @@ namespace AppMobile_ProjetPompierC.DTO
         /// <summary>
         /// Propriété représentant le code du véhicule.
         /// </summary>
-        public string Code { get; set; }
+        public int Code { get; set; }
         /// <summary>
         /// Propriété représentant le nombre de personne du véhicule.
         /// </summary>
-        public int NombrePersonne { get; set; }
+        public int Personnes { get; set; }
 
        /// <summary>
        /// Propriété représentant le nombre de personne du véhicule.
@@ -30,11 +30,11 @@ namespace AppMobile_ProjetPompierC.DTO
        /// <param name="type"></param>
        /// <param name="code"></param>
        /// <param name="nombrePersonne"></param>
-        public TypeVehiculeDTO( string type = "", string code, int nombrePersonne)
+        public TypesVehiculeDTO( string type = "", int code = 0, int personnes = 0)
         {
             Type = type;
             Code = code;
-            NombrePersonne = nombrePersonne;
+			Personnes = personnes;
         }
 
         #endregion Constructeurs
