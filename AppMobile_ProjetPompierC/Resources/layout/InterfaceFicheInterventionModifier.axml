@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TableLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tableLayoutCaserneModifier"
+        android:padding="35dp">
+        <TableRow
+            android:id="@+id/tableRowTypeModifier"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Type :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblTypeModifier"
+                android:layout_marginLeft="0.0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_column="1"
+                android:id="@+id/edtTypeModifier"
+                android:layout_height="40.5dp"
+                android:enabled="false"
+                android:inputType="text"
+                android:layout_width="300dp" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRowCapitaineModifier"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Capitaine :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblCapitaineModifier"
+                android:layout_marginLeft="0.0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_column="1"
+                android:id="@+id/edtCapitaineModifier"
+                android:layout_height="40.5dp"
+                android:enabled="false"
+                android:inputType="text"
+                android:layout_width="match_parent" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRowAdresseModifier"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Adresse :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblAdresseModifier"
+                android:layout_marginLeft="0.0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_column="1"
+                android:id="@+id/edtAdresseModifier"
+                android:layout_height="40.5dp"
+                android:inputType="text"
+                android:layout_width="match_parent" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRowResumeModifier"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Resume :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblResumeModifier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_column="1"
+                android:id="@+id/edtResumeModifier"
+                android:layout_height="40.5dp"
+                android:inputType="text"
+                android:layout_width="match_parent" />
+        </TableRow>
+
+    </TableLayout>
+    <Button
+        android:text="MODIFIER"
+        android:layout_width="144.5dp"
+        android:layout_height="38.0dp"
+        android:id="@+id/btnModifier"
+        android:layout_marginTop="26.0dp"
+        android:layout_marginBottom="0.0dp"
+        android:layout_gravity="center"
+        />
+
+</LinearLayout>

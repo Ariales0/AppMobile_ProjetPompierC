@@ -14,6 +14,8 @@
     <None Remove="Resources\layout\InterfaceCaserneDetails.axml" />
     <None Remove="Resources\layout\InterfaceCaserneModifier.axml" />
     <None Remove="Resources\layout\InterfaceFicheInterventionActivity.axml" />
+    <None Remove="Resources\layout\InterfaceFicheInterventionDetails.axml" />
+    <None Remove="Resources\layout\InterfaceFicheInterventionModifier.axml" />
     <None Remove="Resources\layout\InterfaceGradeActivity.axml" />
     <None Remove="Resources\layout\InterfaceGradeDetailsModifier.axml" />
     <None Remove="Resources\layout\InterfacePompierActivity.axml" />
@@ -30,6 +32,8 @@
     <None Remove="Resources\layout\ListeAdapteurPompierItem.xml" />
     <None Remove="Resources\layout\ListeAdapteurTypeVehiculeItem.xml" />
     <None Remove="Resources\layout\ListeAdapteurVehiculeItem.xml" />
+    <None Remove="Resources\menu\FicheInterventionDetailsOptionsMenu.axml" />
+    <None Remove="Resources\menu\FicheInterventionModifierOptionsMenu.axml" />
     <None Remove="Resources\menu\GradeActivityOptionsMenu.axml" />
     <None Remove="Resources\menu\GradeDetailsModifierOptionsMenu.axml" />
     <None Remove="Resources\menu\PompierActivityOptionsMenu.axml" />

@@ -11,18 +11,54 @@ namespace AppMobile_ProjetPompierC.Vues
 {
     [Activity(Label = "@string/app_name")]
     public class FicheInterventionActivity : Activity
-    {
+    {   
+        /// <summary>
+        /// Attribut représentant le nom de la caserne.
+        /// </summary>
         private string paramNomCaserne;
+        /// <summary>
+        /// Attribut représentant le matricule du capitaine.
+        /// </summary>
         int matriculeCapitaine;
-        private List<FicheInterventionDTO> listeFicheIntervention;
+        /// <summary>
+        /// Attribut représentant la liste des fiches d'intervention.
+        /// </summary>
+        List<FicheInterventionDTO> listeFicheIntervention;
+        /// <summary>
+        /// Attribut représentant l'adapteur pour la liste des fiches d'intervention.
+        /// </summary>
         private ListeInterventionAdapter adapteurListeFicheIntervention;
+        /// <summary>
+        /// Attribut représentant la liste des pompiers.
+        /// </summary>
         private List<PompierDTO> listePompier;
+        /// <summary>
+        /// Attribut représentant l'adapteur pour la liste des pompiers.
+        /// </summary>
         private ListePompierAdapter adapteurListePompier;
+        /// <summary>
+        /// Attribut représentant le champ d'édition de l'adresse de l'intervention.
+        /// </summary>
         EditText edtAdresse;
+        /// <summary>
+        /// Attribut représentant le champ d'édition du type d'intervention.
+        /// </summary>
         EditText edtTypeIntervention;
+        /// <summary>
+        /// Attribut représentant le champ d'édition du résumé de l'intervention.
+        /// </summary>
         EditText edtResume;
+        /// <summary>
+        /// Attribut représentant le spinner pour la liste des capitaines.
+        /// </summary>
         Spinner spnCapitaine;
+        /// <summary>
+        /// Attribut représentant le bouton pour ouvrir une fiche d'intervention.
+        /// </summary>
         Button btnOuvrirFicheIntervention;
+        /// <summary>
+        /// Attribut représentant la liste des fiches d'intervention.
+        /// </summary>
         ListView listViewFicheIntervention;
 
 
@@ -41,19 +77,22 @@ namespace AppMobile_ProjetPompierC.Vues
             edtTypeIntervention = FindViewById<EditText>(Resource.Id.edtTypeInterventionInfo);
             edtResume = FindViewById<EditText>(Resource.Id.edtResumeInfo);
 
+            listeFicheIntervention = new List<FicheInterventionDTO>(); 
+            listePompier = new List<PompierDTO>();
+
+			
+            ObtenirListePompiers();
 
 
-            spnCapitaine = FindViewById<Spinner>(Resource.Id.spnCapitaineInfo);
+			spnCapitaine = FindViewById<Spinner>(Resource.Id.spnCapitaineInfo);
             // Événement de sélection d'un capitaine dans la liste
             spnCapitaine.ItemSelected += async (sender, e) =>
             {
                 // Obtenir la liste des fiches d'intervention du capitaine sélectionné
                 matriculeCapitaine = listePompier[e.Position].Matricule;
-                string jsonResponseIntevention = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Intervention/ObtenirListeFicheIntervention?nomCaserne=" + paramNomCaserne + "&matriculeCapitaine=" + matriculeCapitaine);
-                listeFicheIntervention = JsonConvert.DeserializeObject<List<FicheInterventionDTO>>(jsonResponseIntevention);
-                adapteurListeFicheIntervention = new ListeInterventionAdapter(this, listeFicheIntervention.ToArray());
-                listViewFicheIntervention.Adapter = adapteurListeFicheIntervention;
-            };
+				RafraichirInterfaceDonnees();
+
+			};
 
             btnOuvrirFicheIntervention = FindViewById<Button>(Resource.Id.btnOuvrir);
             // Événement de clic sur le bouton pour ouvrir une fiche d'intervention
@@ -67,7 +106,7 @@ namespace AppMobile_ProjetPompierC.Vues
                         // Créer une nouvelle fiche d'intervention uniquement si les champs ne sont pas vides
                         FicheInterventionDTO fiche = new FicheInterventionDTO()
                         {
-                            DateDebut = DateTime.Now.ToString(),
+                            DateDebut = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"),
                             DateFin = null,
                             Adresse = edtAdresse.Text,
                             TypeIntervention = edtTypeIntervention.Text,
@@ -79,7 +118,7 @@ namespace AppMobile_ProjetPompierC.Vues
                         // Envoi de la fiche à l'API
                         await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Intervention/OuvrirFicheIntervention?nomCaserne=" + paramNomCaserne, fiche);
                         DialoguesUtils.AfficherToasts(this, "Fiche d'intervention ouverte !!!");
-
+                        RafraichirInterfaceDonnees();
                     }
                     // Gestion des erreurs lors de l'ouverture de la fiche
                     catch (Exception ex)
@@ -95,7 +134,19 @@ namespace AppMobile_ProjetPompierC.Vues
             };
 
             listViewFicheIntervention = FindViewById<ListView>(Resource.Id.listViewIntervention);
-        }
+			listViewFicheIntervention.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
+			{
+				Intent activiteFicheInterventionDetails = new Intent(this, typeof(FicheInterventionDetailsActivity));
+				//On initialise les paramètres avant de lancer la nouvelle activité.
+				activiteFicheInterventionDetails.PutExtra("paramNomCaserne", paramNomCaserne);
+                activiteFicheInterventionDetails.PutExtra("paramMatriculeCapitaine", matriculeCapitaine);
+                activiteFicheInterventionDetails.PutExtra("paramDateDebut", listeFicheIntervention[e.Position].DateDebut);
+				//On démarre la nouvelle activité.
+				StartActivity(activiteFicheInterventionDetails);
+			};
+
+		}
+
 
         /// <summary>
         /// Méthode de service appelée lors du retour en avant plan de l'activité.
@@ -106,6 +157,20 @@ namespace AppMobile_ProjetPompierC.Vues
             await RafraichirInterfaceDonnees();
         }
 
+       /// <summary>
+       /// Fonction permettant d'obtenir la liste des pompiers.
+       /// </summary>
+       /// <returns></returns>
+        private async Task ObtenirListePompiers()
+        {
+			// Obtenir la liste des pompiers.
+			string jsonResponsePompier = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ObtenirListePompier?nomCaserne=" + paramNomCaserne + "&seulementCapitaine=" + true);
+			listePompier = JsonConvert.DeserializeObject<List<PompierDTO>>(jsonResponsePompier);
+			adapteurListePompier = new ListePompierAdapter(this, listePompier.ToArray());
+            spnCapitaine.Adapter = adapteurListePompier;
+
+		}
+
         /// <summary>
         /// Méthode permettant de rafraichir la liste des Pompiers...
         /// </summary>
@@ -113,12 +178,24 @@ namespace AppMobile_ProjetPompierC.Vues
         {
             try
             {
-                // Obtenir la liste des pompiers
-                string jsonResponsePompier = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ObtenirListePompier?nomCaserne=" + paramNomCaserne + "&seulementCapitaine=" + true);
-                listePompier = JsonConvert.DeserializeObject<List<PompierDTO>>(jsonResponsePompier);
-                adapteurListePompier = new ListePompierAdapter(this, listePompier.ToArray());
-                spnCapitaine.Adapter = adapteurListePompier;
+				string jsonResponseIntevention = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Intervention/ObtenirListeFicheIntervention?nomCaserne=" + paramNomCaserne + "&matriculeCapitaine=" + matriculeCapitaine);
+				listeFicheIntervention = JsonConvert.DeserializeObject<List<FicheInterventionDTO>>(jsonResponseIntevention);
+				adapteurListeFicheIntervention = new ListeInterventionAdapter(this, listeFicheIntervention.ToArray());
+				listViewFicheIntervention.Adapter = adapteurListeFicheIntervention;
 
+
+				if (listeFicheIntervention.Count > 0)
+                {
+					if (listeFicheIntervention[listeFicheIntervention.Count - 1].DateFin == "")
+					{
+						btnOuvrirFicheIntervention.Enabled = false;
+					}
+					else
+					{
+						btnOuvrirFicheIntervention.Enabled = true;
+					}
+				}
+                
             }
             catch (Exception ex)
             {
