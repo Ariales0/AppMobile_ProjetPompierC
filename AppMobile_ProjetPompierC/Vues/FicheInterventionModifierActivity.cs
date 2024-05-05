@@ -86,6 +86,7 @@ namespace ProjetPompier_Mobile.Vues
             edtResumeModifier = FindViewById<TextView>(Resource.Id.edtResumeModifier);
             edtTypeModifier = FindViewById<TextView>(Resource.Id.edtTypeModifier);
 
+
            
 
             btnModifierIntervention = FindViewById<Button>(Resource.Id.btnModifier);
@@ -144,6 +145,11 @@ namespace ProjetPompier_Mobile.Vues
                 edtResumeModifier.Text = laFiche.Resume;
                 edtTypeModifier.Text = laFiche.TypeIntervention;
                 edtAdresseModifier.Text = laFiche.Adresse;
+
+                jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ObtenirPompier?nomCaserne=" + paramNomCaserne + "&matriculePompier=" + paramMatriculePompier);
+                PompierDTO pompier = JsonConvert.DeserializeObject<PompierDTO>(jsonResponse);
+                edtCapitaineModifier.Text = pompier.Nom + " " + pompier.Prenom;
+
             }
             catch (Exception)
             {
