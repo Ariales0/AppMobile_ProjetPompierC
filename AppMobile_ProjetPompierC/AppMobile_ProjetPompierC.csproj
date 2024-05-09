@@ -21,6 +21,7 @@
     <None Remove="Resources\layout\InterfacePompierActivity.axml" />
     <None Remove="Resources\layout\InterfacePompierDetails.axml" />
     <None Remove="Resources\layout\InterfacePompierModifier.axml" />
+    <None Remove="Resources\layout\InterfaceTypeInterventionActivity.axml" />
     <None Remove="Resources\layout\InterfaceTypeVehiculeActivity.axml" />
     <None Remove="Resources\layout\InterfaceTypeVehiculeDetailsModifier.axml" />
     <None Remove="Resources\layout\InterfaceVehiculeActivity.axml" />
@@ -30,6 +31,7 @@
     <None Remove="Resources\layout\ListeAdapteurFicheInterventionItem.xml" />
     <None Remove="Resources\layout\ListeAdapteurGradeItem.xml" />
     <None Remove="Resources\layout\ListeAdapteurPompierItem.xml" />
+    <None Remove="Resources\layout\ListeAdapteurTypeInterventionItem.xml" />
     <None Remove="Resources\layout\ListeAdapteurTypeVehiculeItem.xml" />
     <None Remove="Resources\layout\ListeAdapteurVehiculeItem.xml" />
     <None Remove="Resources\menu\FicheInterventionDetailsOptionsMenu.axml" />
@@ -39,6 +41,7 @@
     <None Remove="Resources\menu\PompierActivityOptionsMenu.axml" />
     <None Remove="Resources\menu\PompierDetailsOptionsMenu.axml" />
     <None Remove="Resources\menu\PompierModifierOptionsMenu.axml" />
+    <None Remove="Resources\menu\TypeInterventionActivityOptionsMenu.axml" />
     <None Remove="Resources\menu\TypeVehiculeActivityOptionsMenu.axml" />
     <None Remove="Resources\menu\TypeVehiculeDetailsModifierOptionsMenu.axml" />
     <None Remove="Resources\menu\VehiculeActivityOptionsMenu.axml" />

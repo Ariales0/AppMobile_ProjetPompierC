@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 	<item android:id="@+id/Grade" android:title="Grades"/>
 	<item android:id="@+id/TypeVehicule" android:title="Types de véhicule"/>
+	<item android:id="@+id/TypeIntervention" android:title="Types d'intervention"/>
 	<item android:id="@+id/Vider" android:title="Vider la liste des casernes"/>
 	<item android:id="@+id/Quitter" android:title="Quitter"/>
 </menu>

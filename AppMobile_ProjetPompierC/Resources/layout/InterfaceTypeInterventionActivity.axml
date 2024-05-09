@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:minWidth="25px"
+	android:minHeight="25px">
+	<TextView
+		android:text="Liste de(s) type(s) d'intervention(s) : "
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/textViewListeTypeIntervention" />
+	<ListView
+		android:minWidth="25px"
+		android:minHeight="25px"
+		android:layout_width="match_parent"
+		android:layout_height="164.0dp"
+		android:id="@+id/listViewTypeIntervention"
+		android:layout_marginBottom="13.5dp"
+		android:layout_marginTop="28.0dp" />
+		<TableLayout
+		android:minWidth="25px"
+		android:minHeight="25px"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/tlAjoutTypeIntervention">
+        <TableRow
+            android:id="@+id/trDescriptionTypeInterventionAjout"
+            android:layout_height="93.0dp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent">
+            <TextView
+                android:text="Description :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblDescriptionTypeInterventionAjout"
+                android:layout_marginRight="0.0dp"
+                android:layout_marginLeft="0.0dp"
+                android:layout_width="105.0dp"
+                android:layout_marginBottom="0.0dp"
+                android:layout_marginTop="0.0dp"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_column="1"
+                android:id="@+id/edtDescriptionTypeInterventionAjout"
+                android:layout_height="40.5dp"
+                android:layout_width="202.5dp"
+                android:layout_marginBottom="0.0dp"
+                android:layout_marginTop="0.0dp"
+                android:layout_marginRight="0.0dp"
+                android:inputType="text" />
+        </TableRow>
+		<TableRow
+            android:id="@+id/trCodeTypeInterventionAjout"
+            android:layout_height="93.0dp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent">
+            <TextView
+                android:text="Code :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblCodeTypeInterventionAjout"
+                android:layout_marginRight="0.0dp"
+                android:layout_marginLeft="0.0dp"
+                android:layout_width="105.0dp"
+                android:layout_marginBottom="0.0dp"
+                android:layout_marginTop="0.0dp"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_column="1"
+                android:id="@+id/edtCodeTypeInterventionAjout"
+                android:layout_height="40.5dp"
+                android:layout_width="202.5dp"
+                android:layout_marginBottom="0.0dp"
+                android:layout_marginTop="0.0dp"
+                android:layout_marginRight="0.0dp"
+                android:inputType="text" />
+        </TableRow>
+	</TableLayout>
+    
+	<Button
+		android:text="AJOUTER"
+		android:layout_width="144dp"
+		android:layout_height="40dp"
+		android:id="@+id/btnAjouterTypeIntervention"
+        android:layout_gravity="center"
+        android:layout_marginTop="26dp"
+        android:layout_marginBottom="16dp" />
+</LinearLayout>
