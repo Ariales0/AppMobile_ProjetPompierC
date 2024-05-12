@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+id/ViderTypeVehiculeActivity" android:title="Vider la liste"/>
-	<item android:id="@+id/RetourTypeVehiculeActivity" android:title="Retour"/>
-	<item android:id="@+id/QuitterTypeVehiculeActivity" android:title="Quitter"/>
+	<item android:id="@+id/ViderTypeInterventionActivity" android:title="Vider la liste"/>
+	<item android:id="@+id/RetourTypeInterventionActivity" android:title="Retour"/>
+	<item android:id="@+id/QuitterTypeInterventionActivity" android:title="Quitter"/>
 </menu>

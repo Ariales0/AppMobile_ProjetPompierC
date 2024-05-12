@@ -60,6 +60,37 @@ public class TypeInterventionActivity : Activity
         listViewTypeIntervention = FindViewById<ListView>(Resource.Id.listViewTypeIntervention);
 
         btnAjouterTypeIntervention = FindViewById<Button>(Resource.Id.btnAjouterTypeIntervention);
+        btnAjouterTypeIntervention.Click += async (sender, e) =>
+        {
+            if((edtCodeTypeIntervention.Text.Length > 0) && (edtDescriptionTypeIntervention.Text.Length > 0))
+            {
+                try
+                {
+                    string description = edtDescriptionTypeIntervention.Text;
+                    TypeInterventionDTO typeIntervention = new TypeInterventionDTO
+                    {
+                        Code = int.Parse(edtCodeTypeIntervention.Text),
+                        Description = description
+                    };
+                    await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypesIntervention/AjouterTypeIntervention", typeIntervention);
+                    await RafraichirInterfaceDonnees();
+                    DialoguesUtils.AfficherToasts(this, description + " ajouté !!!");
+                }
+                catch (Exception ex)
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                    alert.SetTitle("Erreur");
+                    alert.SetMessage("Erreur lors de l'ajout du type d'intervention: ");
+                    alert.SetPositiveButton("Ok", (senderAlert, args) => { });
+                    Dialog dialog = alert.Create();
+                    dialog.Show();
+                }
+            }
+            else
+            {
+                DialoguesUtils.AfficherMessageOK(this, "Erreur", "Veuillez remplir tous les champs...");
+            }
+        };
 
     }
 
@@ -90,7 +121,7 @@ public class TypeInterventionActivity : Activity
         {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.SetTitle("Erreur");
-            alert.SetMessage("Erreur lors de la récupération des types d'intervention: " + e.Message);
+            alert.SetMessage("Erreur lors de la récupération des types d'intervention: ");
             alert.SetPositiveButton("Ok", (senderAlert, args) => { });
             Dialog dialog = alert.Create();
             dialog.Show();
