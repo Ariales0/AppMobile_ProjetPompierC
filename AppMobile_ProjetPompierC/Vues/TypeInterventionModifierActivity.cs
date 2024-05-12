@@ -15,7 +15,7 @@ namespace AppMobile_ProjetPompierC.Vues
     /// Classe de type Activité pour la gestion d'un type d'intervention.
     /// </summary>
     [Activity(Label = "@string/app_name")]
-    public class TypeInterventionDetailsActivity : Activity
+    public class TypeInterventionModifierActivity : Activity
     {
         #region Proprietes
         
@@ -25,20 +25,24 @@ namespace AppMobile_ProjetPompierC.Vues
         private int paramCodeTypeIntervention;
 
         /// <summary>
-        ///  Le type d'intervention DTO.
+        /// Attrubut représentant le type d'intervention DTO.
         /// </summary>
         private TypeInterventionDTO leTypeIntervention;
 
         /// <summary>
-        ///  Attrubut représentant le champ d'édition du code du type d'intervention.
+        /// Attrubut représentant le champ d'édition du code du type d'intervention.
         /// </summary>
-        private TextView lblCodeTypeInterventionAfficher;
+        private EditText edtCodeTypeIntervention;
 
         /// <summary>
         /// Attrubut représentant le champ d'édition de la description du type d'intervention.
         /// </summary>
-        private TextView lblDescriptionTypeInterventionAfficher;
+        private EditText edtDescriptionTypeIntervention;
 
+        /// <summary>
+        /// Bouton pour modifier un type d'intervention.
+        /// </summary>
+        private Button btnModifierTypeIntervention;
 
         #endregion Proprietes
 
@@ -50,14 +54,46 @@ namespace AppMobile_ProjetPompierC.Vues
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.InterfaceTypeInterventionDetails);
+            SetContentView(Resource.Layout.InterfaceTypeInterventionModifier);
 
             // Récupération des paramètres de l'activité
             paramCodeTypeIntervention = Intent.GetIntExtra("CodeTypeIntervention", 0);
 
             // Récupération des éléments de l'interface
-            lblCodeTypeInterventionAfficher = FindViewById<TextView>(Resource.Id.lblCodeTypeInterventionAfficher);
-            lblDescriptionTypeInterventionAfficher = FindViewById<TextView>(Resource.Id.lblDescriptionTypeInterventionAfficher);
+            edtCodeTypeIntervention = FindViewById<EditText>(Resource.Id.edtCodeModifier);
+
+            edtDescriptionTypeIntervention = FindViewById<EditText>(Resource.Id.edtDescriptionModifier);
+
+            btnModifierTypeIntervention = FindViewById<Button>(Resource.Id.btnModifierTypeIntervention);
+            btnModifierTypeIntervention.Click += async (sender, e) =>
+            {
+                // Modification du type d'intervention
+                if((edtDescriptionTypeIntervention.Text.Length > 0) && (edtCodeTypeIntervention.Text.Length > 0))
+                {
+                    TypeInterventionDTO typeIntervention = new TypeInterventionDTO
+                    {
+                        Code = int.Parse(edtCodeTypeIntervention.Text),
+                        Description = edtDescriptionTypeIntervention.Text
+                    };
+                    try
+                    {
+                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypesIntervention/ModifierTypeIntervention", typeIntervention);
+                        DialoguesUtils.AfficherToasts(this, "Type d'intervention modifié avec succès.");
+                        Finish();
+                    }
+                    catch (Exception ex)
+                    {
+                        DialoguesUtils.AfficherToasts(this, "Erreur lors de la modification du type d'intervention: " + ex.Message);
+                    }
+                }
+                else
+                {
+                    DialoguesUtils.AfficherToasts(this, "Veuillez modifier une valeur.");
+                }
+
+            };
+
+
         }
 
         /// <summary>
@@ -71,17 +107,18 @@ namespace AppMobile_ProjetPompierC.Vues
 
 
         /// <summary>
-        /// Méthode permettant de rafraichir les informations du type d'intervention...
+        /// Méthode permettant de rafraichir les informations de la Caserne...
         /// </summary>
         private async Task RafraichirInterfaceDonnees()
-        {    
+        {
             // Récupération des informations du type d'intervention
             try
             {
                 string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypesIntervention/ObtenirTypeIntervention?code=" + paramCodeTypeIntervention);
                 leTypeIntervention = JsonConvert.DeserializeObject<TypeInterventionDTO>(jsonResponse);
-                lblCodeTypeInterventionAfficher.Text = leTypeIntervention.Code.ToString();
-                lblDescriptionTypeInterventionAfficher.Text = leTypeIntervention.Description;
+                edtCodeTypeIntervention.Text = leTypeIntervention.Code.ToString();
+                edtDescriptionTypeIntervention.Text = leTypeIntervention.Description;
+                edtDescriptionTypeIntervention.RequestFocus();
             }
             // Affichage d'un message d'erreur en cas d'exception
             catch (Exception ex)
@@ -96,7 +133,7 @@ namespace AppMobile_ProjetPompierC.Vues
         /// <returns>Retourne True si l'optionMenu est bien créé.</returns>
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            MenuInflater.Inflate(Resource.Menu.TypeInterventionDetailsActivityOptionsMenu, menu);
+            MenuInflater.Inflate(Resource.Menu.TypeInterventionModifierActivityOptionsMenu, menu);
             return base.OnCreateOptionsMenu(menu);
         }
 
@@ -107,33 +144,6 @@ namespace AppMobile_ProjetPompierC.Vues
         {
             switch (item.ItemId)
             {
-                // Modification du type d'intervention
-                case Resource.Id.ModifierTypeIntervention:
-                    Intent intent = new Intent(this, typeof(TypeInterventionModifierActivity));
-                    intent.PutExtra("CodeTypeIntervention", paramCodeTypeIntervention);
-                    StartActivity(intent);
-                    break;
-                // Suppression du type d'intervention
-                case Resource.Id.SupprimerTypeIntervention:
-                    try
-                    {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.SetPositiveButton("Non", (send, args) => { });
-                        builder.SetNegativeButton("Oui", async (send, args) =>
-                        {
-                            await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypesIntervention/SupprimerTypeIntervention?code=" + paramCodeTypeIntervention, null);
-                            DialoguesUtils.AfficherToasts(this, "Type d'intervention supprimé avec succès.");
-                            Finish();
-                        });
-                        builder.SetMessage("Voulez-vous vraiment supprimer ce type d'intervention?");
-                        builder.SetTitle("Suppression");
-                        builder.Show();
-                    }
-                    catch (Exception ex)
-                    {
-                        DialoguesUtils.AfficherToasts(this, "Erreur lors de la suppression du type d'intervention: " + ex.Message);
-                    }
-                    break;
                 // Retour à l'activité précédente
                 case Resource.Id.RetourTypeInterventionActivity:
                     Finish();

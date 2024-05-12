@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+	<TableLayout
+		android:minWidth="25px"
+		android:minHeight="25px"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/tableLayoutTypeInterventionModifier"
+		android:padding="35dp">
+        <TableRow
+            android:id="@+id/tableRowDescriptionModifier"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Description :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblDescriptionModifier"
+                android:layout_marginLeft="0.0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_column="1"
+                android:id="@+id/edtDescriptionModifier"
+                android:layout_height="40.5dp"
+                android:inputType="text"
+                android:layout_width="233.5dp" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRowCodeModifier"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Code :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblCodeModifier"
+                android:layout_marginLeft="0.0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_column="1"
+                android:id="@+id/edtCodeModifier"
+                android:layout_height="40.5dp"
+                android:enabled="false"
+                android:inputType="text"
+                android:layout_width="match_parent" />
+        </TableRow>
+	</TableLayout>
+	<Button
+		android:text="MODIFIER"
+		android:layout_width="144.5dp"
+		android:layout_height="38.0dp"
+		android:id="@+id/btnModifierTypeIntervention"
+		android:layout_marginLeft="128.0dp"
+		android:layout_marginTop="26.0dp"
+		android:layout_marginBottom="0.0dp" />
+</LinearLayout>
