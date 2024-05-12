@@ -1,4 +1,5 @@
 ﻿using Android.Content;
+using Android.Content;
 using Android.Views;
 using Newtonsoft.Json;
 

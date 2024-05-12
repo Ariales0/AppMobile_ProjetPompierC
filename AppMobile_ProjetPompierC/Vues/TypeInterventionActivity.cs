@@ -58,6 +58,15 @@ public class TypeInterventionActivity : Activity
         edtDescriptionTypeIntervention = FindViewById<EditText>(Resource.Id.edtDescriptionTypeInterventionAjout);
 
         listViewTypeIntervention = FindViewById<ListView>(Resource.Id.listViewTypeIntervention);
+        listViewTypeIntervention.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
+        {
+            // Création de l'activité de détail du type d'intervention.
+            Intent activiteTypeInterventionDetails = new Intent(this, typeof(TypeInterventionDetailsActivity));
+            // Ajout des informations du type d'intervention à l'activité de détail.
+            activiteTypeInterventionDetails.PutExtra("CodeTypeIntervention", listeTypeIntervention[e.Position].Code);
+            // Démarrage de l'activité de détail du type d'intervention.
+            StartActivity(activiteTypeInterventionDetails);
+        };
 
         btnAjouterTypeIntervention = FindViewById<Button>(Resource.Id.btnAjouterTypeIntervention);
         btnAjouterTypeIntervention.Click += async (sender, e) =>
