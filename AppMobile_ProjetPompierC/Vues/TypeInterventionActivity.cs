@@ -115,7 +115,7 @@ public class TypeInterventionActivity : Activity
             adapteurListeTypeIntervention = new ListeTypeInterventionAdapter(this, listeTypeIntervention.ToArray());
             listViewTypeIntervention.Adapter = adapteurListeTypeIntervention;
             edtCodeTypeIntervention.Text = edtDescriptionTypeIntervention.Text = "";
-            edtCodeTypeIntervention.RequestFocus();
+            edtDescriptionTypeIntervention.RequestFocus();
         }
         catch (Exception e)
         {
@@ -144,11 +144,38 @@ public class TypeInterventionActivity : Activity
     {
         switch (item.ItemId)
         {
-            case Resource.Id.RetourTypeVehiculeActivity:
+            case Resource.Id.ViderTypeInterventionActivity:
+                try
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.SetPositiveButton("Non", (send, args) => { });
+                    builder.SetNegativeButton("Oui", async (send, args) =>
+                    {
+                        await WebAPI.Instance.PostAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypesIntervention/ViderListeTypesIntervention", null);
+                        await RafraichirInterfaceDonnees();
+                        DialoguesUtils.AfficherToasts(this, "Tous les types d'intervention ont été supprimés !!!");
+                    });
+                    AlertDialog dialog = builder.Create();
+                    dialog.SetTitle("Suppression");
+                    dialog.SetMessage("Voulez-vous vraiment vider la liste des types d'intervention ?");
+                    dialog.Window.SetGravity(GravityFlags.Bottom);
+                    dialog.Show();
+                }
+                catch (Exception ex)
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                    alert.SetTitle("Erreur");
+                    alert.SetMessage("Erreur lors de la suppression des types d'intervention...");
+                    alert.SetPositiveButton("Ok", (senderAlert, args) => { });
+                    Dialog dialog = alert.Create();
+                    dialog.Show();
+                }
+                break;
+            case Resource.Id.RetourTypeInterventionActivity:
                 Finish();
                 break;
 
-            case Resource.Id.QuitterTypeVehiculeActivity:
+            case Resource.Id.QuitterTypeInterventionActivity:
                 FinishAffinity();
                 break;
         }
