@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/AjouterEquipe" android:title="Ajouter une équipe"/>
 	<item android:id="@+id/Modifier" android:title="Modifier la fiche"/>
 	<item android:id="@+id/Fermer" android:title="Fermer la fiche"/>
 	<item android:id="@+id/Retour" android:title="Retour"/>

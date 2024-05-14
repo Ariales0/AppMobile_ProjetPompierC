@@ -6,6 +6,7 @@ using AppMobile_ProjetPompierC;
 using AppMobile_ProjetPompierC.Adapters;
 using AppMobile_ProjetPompierC.DTO;
 using AppMobile_ProjetPompierC.Utils;
+using ProjetPompier_Mobile.Vues;
 
 namespace AppMobile_ProjetPompierC.Vues
 {
@@ -21,6 +22,10 @@ namespace AppMobile_ProjetPompierC.Vues
         /// </summary>
         int matriculeCapitaine;
         /// <summary>
+        /// Attribut représentant le code du type d'intervention.
+        /// </summary>
+        int codeTypeIntervention;
+        /// <summary>
         /// Attribut représentant la liste des fiches d'intervention.
         /// </summary>
         List<FicheInterventionDTO> listeFicheIntervention;
@@ -33,9 +38,17 @@ namespace AppMobile_ProjetPompierC.Vues
         /// </summary>
         private List<PompierDTO> listePompier;
         /// <summary>
+        /// Attribut représentant la liste des types d'intervention.
+        /// </summary>
+        private List<TypeInterventionDTO> listeTypeIntervention;
+        /// <summary>
         /// Attribut représentant l'adapteur pour la liste des pompiers.
         /// </summary>
         private ListePompierAdapter adapteurListePompier;
+        /// <summary>
+        /// Attribut représentant l'adapteur pour la liste des types d'intervention.
+        /// </summary>
+        private ListeTypeInterventionAdapter adapteurListeTypeIntervention;
         /// <summary>
         /// Attribut représentant le champ d'édition de l'adresse de l'intervention.
         /// </summary>
@@ -43,7 +56,7 @@ namespace AppMobile_ProjetPompierC.Vues
         /// <summary>
         /// Attribut représentant le champ d'édition du type d'intervention.
         /// </summary>
-        EditText edtTypeIntervention;
+        Spinner spnTypeIntervention;
         /// <summary>
         /// Attribut représentant le champ d'édition du résumé de l'intervention.
         /// </summary>
@@ -74,17 +87,19 @@ namespace AppMobile_ProjetPompierC.Vues
             paramNomCaserne = Intent.GetStringExtra("paramNomCaserne");
 
             edtAdresse = FindViewById<EditText>(Resource.Id.edtAdresseInterventionInfo);
-            edtTypeIntervention = FindViewById<EditText>(Resource.Id.edtTypeInterventionInfo);
+            spnTypeIntervention = FindViewById<Spinner>(Resource.Id.spnTypeInterventionInfo);
             edtResume = FindViewById<EditText>(Resource.Id.edtResumeInfo);
 
             listeFicheIntervention = new List<FicheInterventionDTO>(); 
             listePompier = new List<PompierDTO>();
 
-			
+            // Chargement de la liste des pompiers
             ObtenirListePompiers();
 
+            // Chargement de la liste des types d'intervention
+            ObtenirListeTypeIntervention();
 
-			spnCapitaine = FindViewById<Spinner>(Resource.Id.spnCapitaineInfo);
+            spnCapitaine = FindViewById<Spinner>(Resource.Id.spnCapitaineInfo);
             // Événement de sélection d'un capitaine dans la liste
             spnCapitaine.ItemSelected += async (sender, e) =>
             {
@@ -94,12 +109,18 @@ namespace AppMobile_ProjetPompierC.Vues
 
 			};
 
+            spnTypeIntervention.ItemSelected += (sender, e) =>
+            {
+                // Obtenir le type d'intervention sélectionné
+                codeTypeIntervention = listeTypeIntervention[e.Position].Code;
+            };
+
             btnOuvrirFicheIntervention = FindViewById<Button>(Resource.Id.btnOuvrir);
             // Événement de clic sur le bouton pour ouvrir une fiche d'intervention
             btnOuvrirFicheIntervention.Click += async (sender, e) =>
             {
                 // Vérifier que les propriétés de la fiche ne sont pas null
-                if (edtAdresse.Text.Length > 0 && edtTypeIntervention.Text.Length > 0 && edtAdresse.Text.Length > 0)  
+                if (edtAdresse.Text.Length > 0 && codeTypeIntervention > 0 && edtAdresse.Text.Length > 0)
                 {
                     try
                     {
@@ -109,7 +130,7 @@ namespace AppMobile_ProjetPompierC.Vues
                             DateDebut = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"),
                             DateFin = null,
                             Adresse = edtAdresse.Text,
-                            TypeIntervention = edtTypeIntervention.Text,
+                            CodeTypeIntervention = codeTypeIntervention,
                             Resume = edtResume.Text,
                             MatriculeCapitaine = matriculeCapitaine
                         };
@@ -125,6 +146,12 @@ namespace AppMobile_ProjetPompierC.Vues
                     {
                         DialoguesUtils.AfficherMessageOK(this, "Erreur", ex.Message);
                     }
+
+                    Intent activiteAjoutEquipe = new Intent(this, typeof(AjouterEquipeActivity));
+                    activiteAjoutEquipe.PutExtra("paramNomCaserne", paramNomCaserne);
+                    activiteAjoutEquipe.PutExtra("paramMatriculeCapitaine", matriculeCapitaine);
+                    activiteAjoutEquipe.PutExtra("paramDateDebut", listeFicheIntervention[listeFicheIntervention.Count - 1].DateDebut);
+                    StartActivity(activiteAjoutEquipe);
                 }
                 else
                 {
@@ -168,8 +195,16 @@ namespace AppMobile_ProjetPompierC.Vues
 			listePompier = JsonConvert.DeserializeObject<List<PompierDTO>>(jsonResponsePompier);
 			adapteurListePompier = new ListePompierAdapter(this, listePompier.ToArray());
             spnCapitaine.Adapter = adapteurListePompier;
-
 		}
+
+        private async Task ObtenirListeTypeIntervention()
+        {
+            // Obtenir la liste des types d'intervention.
+            string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/TypesIntervention/ObtenirListeTypesIntervention");
+            listeTypeIntervention = JsonConvert.DeserializeObject<List<TypeInterventionDTO>>(jsonResponse);
+            adapteurListeTypeIntervention = new ListeTypeInterventionAdapter(this, listeTypeIntervention.ToArray());
+            spnTypeIntervention.Adapter = adapteurListeTypeIntervention;
+        }
 
         /// <summary>
         /// Méthode permettant de rafraichir la liste des Pompiers...

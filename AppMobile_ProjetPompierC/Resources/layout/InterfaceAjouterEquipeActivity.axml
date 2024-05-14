@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:minWidth="25px"
+	android:minHeight="25px">
+	<TableLayout
+		android:minWidth="25px"
+		android:minHeight="25px"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/tableLayoutCaserneInfo">
+        <TableRow
+            android:id="@+id/tableRowNomInfo"
+            android:layout_height="93.0dp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent">
+            <TextView
+                android:text="Véhicule :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblVehiculeInfo"
+                android:layout_marginRight="0.0dp"
+                android:layout_marginLeft="0.0dp"
+                android:layout_width="105.0dp"
+                android:layout_marginBottom="0.0dp"
+                android:layout_marginTop="0.0dp"
+                android:layout_height="wrap_content" />
+            <Spinner
+                android:layout_column="1"
+                android:id="@+id/spnVehiculeInfo"
+                android:layout_height="40.5dp"
+                android:layout_width="253.0dp"
+                android:layout_marginBottom="0.0dp"
+                android:layout_marginTop="0.0dp"
+                android:layout_marginRight="0.0dp"
+                android:inputType="text" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRowPompierInfo"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Pompier :"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/lblPompierInfo"
+                android:layout_marginLeft="0.0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <Spinner
+                android:layout_column="1"
+                android:id="@+id/spnPompierInfo"
+                android:layout_height="40.5dp"
+                android:inputType="text"
+                android:layout_width="match_parent" />
+        </TableRow>
+	</TableLayout>
+    <Button
+        android:text="AJOUTER POMPIER"
+        android:layout_width="248.4dp"
+        android:layout_height="38.0dp"
+        android:id="@+id/btnAjouterPompier"
+        android:layout_marginLeft="125.0dp"
+        android:layout_marginTop="26.0dp"
+        android:layout_marginBottom="0.0dp" />
+	<TextView
+		android:text="Liste de(s) Pompier(s) dans l'équipe : "
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/textViewListePompierÉquipe" />
+	<ListView
+		android:minWidth="25px"
+		android:minHeight="25px"
+		android:layout_width="match_parent"
+		android:layout_height="164.0dp"
+		android:id="@+id/listViewPompierÉquipe"
+		android:layout_marginBottom="13.5dp"
+		android:layout_marginTop="28.0dp" />
+    <Button
+        android:text="AJOUTER ÉQUIPE"
+        android:layout_width="172.6dp"
+        android:layout_height="38.0dp"
+        android:id="@+id/btnAjouterEquipe"
+        android:layout_marginLeft="125.0dp"
+        android:layout_marginTop="26.0dp"
+        android:layout_marginBottom="0.0dp" />
+</LinearLayout>

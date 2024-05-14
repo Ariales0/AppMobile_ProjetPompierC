@@ -10,6 +10,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resources\layout\InterfaceAjouterEquipeActivity.axml" />
     <None Remove="Resources\layout\InterfaceCaserneActivity.axml" />
     <None Remove="Resources\layout\InterfaceCaserneDetails.axml" />
     <None Remove="Resources\layout\InterfaceCaserneModifier.axml" />

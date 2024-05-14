@@ -72,7 +72,7 @@ namespace AppMobile_ProjetPompierC.Adapters
         {
             View view = (convertView ?? context.LayoutInflater.Inflate(Resource.Layout.ListeAdapteurFicheInterventionItem, parent, false)) as LinearLayout;
 
-            view.FindViewById<TextView>(Resource.Id.tvTypeIntervention).Text = listeIntervention[position].TypeIntervention;
+            view.FindViewById<TextView>(Resource.Id.tvResumeItervention).Text = listeIntervention[position].Resume;
 
             return view;
         }

@@ -101,10 +101,10 @@ namespace AppMobile_ProjetPompierC.Vues
         {
             try
             {
-                string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Intervention/ObtenirFicheIntervention?nomCaserne=" + paramNomCaserne + "&matriculeCapitaine=" + paramMatriculeCapitaine + "&dateIntervention=" + paramDateDebut);
+                string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Intervention/ObtenirFicheIntervention?nomCaserne=" + paramNomCaserne + "&matriculeCapitaine=" + paramMatriculeCapitaine + "&dateDebutIntervention=" + paramDateDebut);
                 
 				laFiche = JsonConvert.DeserializeObject<FicheInterventionDTO>(jsonResponse);
-                lblTypeAfficher.Text = laFiche.TypeIntervention;
+                lblTypeAfficher.Text = laFiche.CodeTypeIntervention.ToString();
                 lblAdresseAfficher.Text = laFiche.Adresse;
                 lblResumeAfficher.Text = laFiche.Resume;
                 lblDateDebutAfficher.Text = laFiche.DateDebut;
@@ -154,7 +154,14 @@ namespace AppMobile_ProjetPompierC.Vues
                     activiteModifier.PutExtra("paramDateDebut", paramDateDebut);
                     StartActivity(activiteModifier);
                     break;
-
+                    
+                case Resource.Id.AjouterEquipe:
+                    Intent activiteAjouterEquipe = new Intent(this, typeof(AjouterEquipeActivity));
+                    activiteAjouterEquipe.PutExtra("paramNomCaserne", paramNomCaserne);
+                    activiteAjouterEquipe.PutExtra("paramMatriculeCapitaine", paramMatriculeCapitaine);
+                    activiteAjouterEquipe.PutExtra("paramDateDebut", paramDateDebut);
+                    StartActivity(activiteAjouterEquipe);
+                    break;
 
                 case Resource.Id.Fermer:
                     try
@@ -169,7 +176,7 @@ namespace AppMobile_ProjetPompierC.Vues
                         });
                         AlertDialog dialog = builder.Create();
                         dialog.SetTitle("Suppression");
-                        dialog.SetMessage("Voulez-vous vraiment fermer la fiche " + laFiche.TypeIntervention+ " " + laFiche.Resume+ "?");
+                        dialog.SetMessage("Voulez-vous vraiment fermer la fiche " + laFiche.Resume + "?");
                         dialog.Window.SetGravity(GravityFlags.Bottom);
                         dialog.Show();
                     }

@@ -102,7 +102,7 @@ namespace ProjetPompier_Mobile.Vues
                         {
                             DateDebut = paramDateDebut,
                             Adresse = edtAdresseModifier.Text,
-                            TypeIntervention = edtTypeModifier.Text,
+                            CodeTypeIntervention = int.Parse(edtTypeModifier.Text),
                             Resume = edtResumeModifier.Text,
                             MatriculeCapitaine = paramMatriculePompier
                         };
@@ -140,10 +140,10 @@ namespace ProjetPompier_Mobile.Vues
         {
             try
             {
-                string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Intervention/ObtenirFicheIntervention?nomCaserne=" + paramNomCaserne + " &matriculeCapitaine=" + paramMatriculePompier + "&dateIntervention=" + paramDateDebut);
+                string jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Intervention/ObtenirFicheIntervention?nomCaserne=" + paramNomCaserne + " &matriculeCapitaine=" + paramMatriculePompier + "&dateDebutIntervention=" + paramDateDebut);
                 laFiche = JsonConvert.DeserializeObject<FicheInterventionDTO>(jsonResponse);
                 edtResumeModifier.Text = laFiche.Resume;
-                edtTypeModifier.Text = laFiche.TypeIntervention;
+                edtTypeModifier.Text = laFiche.CodeTypeIntervention.ToString();
                 edtAdresseModifier.Text = laFiche.Adresse;
 
                 jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + GetString(Resource.String.host) + ":" + GetString(Resource.String.port) + "/Pompier/ObtenirPompier?nomCaserne=" + paramNomCaserne + "&matriculePompier=" + paramMatriculePompier);
